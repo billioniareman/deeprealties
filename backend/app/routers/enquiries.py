@@ -13,11 +13,12 @@ async def create_enquiry(
     enquiry_data: EnquiryCreate,
     current_user: TokenData = Depends(get_current_user)
 ):
+    """Create an enquiry for a property. Any user can enquire about properties."""
     db = get_database()
     
-    # Get buyer
-    buyer = await db.users.find_one({"email": current_user.email})
-    if not buyer:
+    # Get user (can be buyer or seller - dual role)
+    user = await db.users.find_one({"email": current_user.email})
+    if not user:
         raise HTTPException(status_code=404, detail="User not found")
     
     # Get property and seller
@@ -30,8 +31,8 @@ async def create_enquiry(
     
     seller_id = property["seller_id"]
     
-    # Don't allow sellers to enquire about their own properties
-    if str(buyer["_id"]) == seller_id:
+    # Don't allow users to enquire about their own properties
+    if str(user["_id"]) == seller_id:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
             detail="Cannot enquire about your own property"
@@ -39,7 +40,7 @@ async def create_enquiry(
     
     enquiry_dict = {
         "property_id": enquiry_data.property_id,
-        "buyer_id": str(buyer["_id"]),
+        "buyer_id": str(user["_id"]),  # buyer_id stores the enquirer's ID
         "seller_id": seller_id,
         "message": enquiry_data.message,
         "created_at": datetime.utcnow(),
@@ -53,6 +54,7 @@ async def create_enquiry(
 
 @router.get("/my-enquiries", response_model=List[Enquiry])
 async def get_my_enquiries(current_user: TokenData = Depends(get_current_user)):
+    """Get all enquiries made by the current user (as a buyer)."""
     db = get_database()
     
     user = await db.users.find_one({"email": current_user.email})
@@ -70,20 +72,16 @@ async def get_my_enquiries(current_user: TokenData = Depends(get_current_user)):
     
     return result
 
-@router.get("/seller/enquiries", response_model=List[Enquiry])
-async def get_seller_enquiries(current_user: TokenData = Depends(get_current_user)):
+@router.get("/received-enquiries", response_model=List[Enquiry])
+async def get_received_enquiries(current_user: TokenData = Depends(get_current_user)):
+    """Get all enquiries received for properties listed by the current user (as a seller)."""
     db = get_database()
     
     user = await db.users.find_one({"email": current_user.email})
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     
-    if user.get("role") not in ["seller", "admin"]:
-        raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Only sellers can view enquiries"
-        )
-    
+    # Any user can receive enquiries if they have listed properties
     cursor = db.enquiries.find({"seller_id": str(user["_id"])}).sort("created_at", -1)
     enquiries = await cursor.to_list(length=1000)
     
@@ -113,7 +111,7 @@ async def mark_enquiry_read(
     if not enquiry:
         raise HTTPException(status_code=404, detail="Enquiry not found")
     
-    # Check if user is the seller
+    # Check if user is the seller (owner of the property) or admin
     if str(enquiry["seller_id"]) != str(user["_id"]) and user.get("role") != "admin":
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,

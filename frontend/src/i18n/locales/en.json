@@ -1,0 +1,129 @@
+{
+  "nav": {
+    "home": "Home",
+    "properties": "Properties",
+    "about": "About",
+    "login": "Login",
+    "register": "Register",
+    "dashboard": "Dashboard",
+    "logout": "Logout"
+  },
+  "home": {
+    "title": "Find Your Dream Home Today",
+    "subtitle": "Discover the perfect property for you",
+    "search": {
+      "city": "City",
+      "propertyType": "Property Type",
+      "maxPrice": "Max Price",
+      "search": "Search"
+    },
+    "featuredProperties": "Featured Properties",
+    "featuredSubtitle": "Explore our handpicked selection of premium properties",
+    "viewAll": "View All Properties",
+    "whyChooseUs": "Why Choose DeepRealties",
+    "whyChooseUsSubtitle": "Experience excellence in real estate",
+    "features": {
+      "premium": {
+        "title": "Premium Properties",
+        "description": "Curated selection of the finest properties in prime locations"
+      },
+      "expert": {
+        "title": "Expert Team",
+        "description": "Our experienced team is here to help you every step of the way"
+      },
+      "insights": {
+        "title": "Market Insights",
+        "description": "Stay informed with real-time market trends and analytics"
+      },
+      "trusted": {
+        "title": "Trusted Platform",
+        "description": "Join thousands of satisfied buyers and sellers"
+      }
+    },
+    "stats": {
+      "properties": "Properties Listed",
+      "customers": "Happy Customers",
+      "cities": "Cities Covered"
+    },
+    "testimonials": {
+      "title": "What Our Customers Say",
+      "subtitle": "Real experiences from real people"
+    },
+    "cta": {
+      "title": "Ready to Find Your Dream Property?",
+      "subtitle": "Start your journey today and discover amazing properties",
+      "button": "Browse Properties"
+    }
+  },
+  "properties": {
+    "title": "Browse Properties",
+    "subtitle": "Find your perfect property from our extensive collection",
+    "filters": "Filters",
+    "city": "City",
+    "state": "State",
+    "propertyType": "Property Type",
+    "minPrice": "Min Price",
+    "maxPrice": "Max Price",
+    "bedrooms": "Bedrooms",
+    "bathrooms": "Bathrooms",
+    "allTypes": "All Types",
+    "house": "House",
+    "apartment": "Apartment",
+    "condo": "Condo",
+    "villa": "Villa",
+    "land": "Land",
+    "commercial": "Commercial",
+    "search": "Search",
+    "clearFilters": "Clear Filters",
+    "noProperties": "No properties found. Try adjusting your filters.",
+    "beds": "Beds",
+    "baths": "Baths",
+    "sqft": "sqft",
+    "viewDetails": "View Details"
+  },
+  "about": {
+    "title": "About DeepRealties",
+    "subtitle": "Your trusted partner in finding and selling premium real estate properties",
+    "mission": "Our Mission",
+    "missionText1": "At DeepRealties, we believe that finding the perfect property should be a seamless and enjoyable experience. Our mission is to connect buyers with their dream homes and help sellers showcase their properties to the right audience.",
+    "missionText2": "With cutting-edge technology, personalized service, and a commitment to excellence, we're revolutionizing the real estate industry one property at a time.",
+    "whyChooseUs": "Why Choose Us",
+    "whyChooseUsSubtitle": "Experience the difference with our comprehensive platform",
+    "values": {
+      "integrity": {
+        "title": "Integrity",
+        "description": "We conduct business with honesty and transparency"
+      },
+      "excellence": {
+        "title": "Excellence",
+        "description": "We strive for the highest standards in everything we do"
+      },
+      "innovation": {
+        "title": "Innovation",
+        "description": "We leverage technology to enhance your experience"
+      },
+      "customer": {
+        "title": "Customer First",
+        "description": "Your satisfaction is our top priority"
+      }
+    }
+  },
+  "propertyDetails": {
+    "back": "Back",
+    "bedrooms": "Bedrooms",
+    "bathrooms": "Bathrooms",
+    "area": "Area",
+    "type": "Type",
+    "sendEnquiry": "Send Enquiry",
+    "submitEnquiry": "Submit Enquiry",
+    "description": "Description",
+    "location": "Location",
+    "enterMessage": "Enter your message..."
+  },
+  "common": {
+    "loading": "Loading...",
+    "error": "An error occurred",
+    "success": "Success"
+  }
+}
+

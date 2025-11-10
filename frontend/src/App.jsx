@@ -2,6 +2,7 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import { Toaster } from 'react-hot-toast'
 import { AuthProvider } from './context/AuthContext'
 import { ThemeProvider } from './context/ThemeContext'
+import { LanguageProvider } from './context/LanguageContext'
 import Navbar from './components/Navbar'
 import Home from './pages/Home'
 import About from './pages/About'
@@ -15,12 +16,13 @@ import ProtectedRoute from './components/ProtectedRoute'
 
 function App() {
   return (
-    <ThemeProvider>
-      <AuthProvider>
-        <Router>
-          <div className="min-h-screen bg-background dark:bg-gray-900 transition-colors">
-            <Navbar />
-            <Routes>
+    <LanguageProvider>
+      <ThemeProvider>
+        <AuthProvider>
+          <Router>
+            <div className="min-h-screen bg-background dark:bg-gray-900 transition-colors">
+              <Navbar />
+              <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/properties" element={<Properties />} />
@@ -49,6 +51,7 @@ function App() {
         </Router>
       </AuthProvider>
     </ThemeProvider>
+    </LanguageProvider>
   )
 }
 

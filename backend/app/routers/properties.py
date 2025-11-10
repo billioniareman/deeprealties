@@ -18,15 +18,16 @@ async def create_property(
 ):
     db = get_database()
     
-    # Get user to check role
+    # Get user - any authenticated user can list properties
     user = await db.users.find_one({"email": current_user.email})
     if not user:
         raise HTTPException(status_code=404, detail="User not found")
     
-    if user.get("role") not in ["seller", "admin"]:
+    # Validate images count (max 3)
+    if len(property_data.images) > 3:
         raise HTTPException(
-            status_code=status.HTTP_403_FORBIDDEN,
-            detail="Only sellers and admins can create properties"
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Maximum 3 images allowed"
         )
     
     property_dict = {
@@ -46,11 +47,16 @@ async def create_property(
 async def get_properties(
     city: Optional[str] = Query(None),
     state: Optional[str] = Query(None),
+    locality: Optional[str] = Query(None),
     property_type: Optional[PropertyType] = Query(None),
     min_price: Optional[float] = Query(None),
     max_price: Optional[float] = Query(None),
+    min_area_sqft: Optional[float] = Query(None),
+    max_area_sqft: Optional[float] = Query(None),
     bedrooms: Optional[int] = Query(None),
     bathrooms: Optional[int] = Query(None),
+    parking: Optional[bool] = Query(None),
+    facing: Optional[str] = Query(None),
     skip: int = Query(0, ge=0),
     limit: int = Query(100, ge=1, le=100)
 ):
@@ -62,6 +68,8 @@ async def get_properties(
         filter_dict["city"] = {"$regex": city, "$options": "i"}
     if state:
         filter_dict["state"] = {"$regex": state, "$options": "i"}
+    if locality:
+        filter_dict["locality"] = {"$regex": locality, "$options": "i"}
     if property_type:
         filter_dict["property_type"] = property_type.value
     if min_price is not None:
@@ -71,10 +79,21 @@ async def get_properties(
             filter_dict["price"]["$lte"] = max_price
         else:
             filter_dict["price"] = {"$lte": max_price}
+    if min_area_sqft is not None:
+        filter_dict["area_sqft"] = {"$gte": min_area_sqft}
+    if max_area_sqft is not None:
+        if "area_sqft" in filter_dict:
+            filter_dict["area_sqft"]["$lte"] = max_area_sqft
+        else:
+            filter_dict["area_sqft"] = {"$lte": max_area_sqft}
     if bedrooms:
         filter_dict["bedrooms"] = bedrooms
     if bathrooms:
         filter_dict["bathrooms"] = bathrooms
+    if parking is not None:
+        filter_dict["parking"] = parking
+    if facing:
+        filter_dict["facing"] = {"$regex": facing, "$options": "i"}
     
     cursor = db.properties.find(filter_dict).sort("created_at", -1).skip(skip).limit(limit)
     properties = await cursor.to_list(length=limit)
@@ -122,7 +141,7 @@ async def update_property(
     if not property:
         raise HTTPException(status_code=404, detail="Property not found")
     
-    # Check if user is the seller or admin
+    # Check if user is the seller or admin (any user can list, but only owner can update)
     if str(property["seller_id"]) != str(user["_id"]) and user.get("role") != "admin":
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
@@ -130,6 +149,14 @@ async def update_property(
         )
     
     update_data = {k: v for k, v in property_data.dict().items() if v is not None}
+    
+    # Validate images count if updating images
+    if "images" in update_data and len(update_data["images"]) > 3:
+        raise HTTPException(
+            status_code=status.HTTP_400_BAD_REQUEST,
+            detail="Maximum 3 images allowed"
+        )
+    
     update_data["updated_at"] = datetime.utcnow()
     
     await db.properties.update_one(
@@ -161,7 +188,7 @@ async def delete_property(
     if not property:
         raise HTTPException(status_code=404, detail="Property not found")
     
-    # Check if user is the seller or admin
+    # Check if user is the seller or admin (any user can list, but only owner can delete)
     if str(property["seller_id"]) != str(user["_id"]) and user.get("role") != "admin":
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
@@ -176,8 +203,9 @@ async def delete_property(
     
     return None
 
-@router.get("/seller/my-properties", response_model=List[Property])
+@router.get("/my-properties", response_model=List[Property])
 async def get_my_properties(current_user: TokenData = Depends(get_current_user)):
+    """Get all properties listed by the current user (any user can list properties)"""
     db = get_database()
     
     user = await db.users.find_one({"email": current_user.email})
