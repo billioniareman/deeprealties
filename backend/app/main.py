@@ -2,17 +2,23 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.routers import auth, properties, enquiries, admin, users, recommendations
 from app.database import connect_to_mongo, close_mongo_connection
+import os
+from dotenv import load_dotenv
+
+load_dotenv()
 
 app = FastAPI(title="DeepRealties API", version="1.0.0")
 
-# CORS middleware
+# CORS middleware - get allowed origins from environment variable or use defaults
+allowed_origins_str = os.getenv(
+    "ALLOWED_ORIGINS",
+    "http://localhost:5173,http://localhost:3000,https://deeprealties.vercel.app"
+)
+allowed_origins = [origin.strip() for origin in allowed_origins_str.split(",")]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        "http://localhost:5173", 
-        "http://localhost:3000",
-        "https://deeprealties.vercel.app"  # Add your Vercel URL here
-    ],
+    allow_origins=allowed_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
