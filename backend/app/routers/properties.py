@@ -223,3 +223,31 @@ async def get_my_properties(current_user: TokenData = Depends(get_current_user))
     
     return result
 
+@router.get("/admin-projects", response_model=List[Property])
+async def get_admin_projects():
+    """Get all properties uploaded by admin users (public endpoint)"""
+    db = get_database()
+    
+    # Find all admin users
+    admin_users = await db.users.find({"role": "admin"}).to_list(length=1000)
+    admin_user_ids = [str(user["_id"]) for user in admin_users]
+    
+    if not admin_user_ids:
+        return []
+    
+    # Find all properties where seller_id is in admin_user_ids
+    cursor = db.properties.find({
+        "seller_id": {"$in": admin_user_ids},
+        "is_active": True
+    }).sort("created_at", -1)
+    
+    properties = await cursor.to_list(length=1000)
+    
+    result = []
+    for prop in properties:
+        prop["id"] = str(prop["_id"])
+        del prop["_id"]
+        result.append(Property(**prop))
+    
+    return result
+

@@ -60,6 +60,14 @@ const Navbar = () => {
             </motion.div>
             <motion.div whileHover={{ y: -2 }} whileTap={{ y: 0 }}>
               <Link
+                to="/our-projects"
+                className="text-gray-700 dark:text-gray-300 hover:text-primary-blue transition-colors font-medium"
+              >
+                {t('nav.ourProjects')}
+              </Link>
+            </motion.div>
+            <motion.div whileHover={{ y: -2 }} whileTap={{ y: 0 }}>
+              <Link
                 to="/about"
                 className="text-gray-700 dark:text-gray-300 hover:text-primary-blue transition-colors font-medium"
               >

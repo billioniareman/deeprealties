@@ -7,6 +7,7 @@ import Navbar from './components/Navbar'
 import Home from './pages/Home'
 import About from './pages/About'
 import Properties from './pages/Properties'
+import OurProjects from './pages/OurProjects'
 import PropertyDetails from './pages/PropertyDetails'
 import Login from './pages/Login'
 import Register from './pages/Register'
@@ -26,6 +27,7 @@ function App() {
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/properties" element={<Properties />} />
+              <Route path="/our-projects" element={<OurProjects />} />
               <Route path="/properties/:id" element={<PropertyDetails />} />
               <Route path="/login" element={<Login />} />
               <Route path="/register" element={<Register />} />

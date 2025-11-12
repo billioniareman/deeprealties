@@ -2,6 +2,7 @@
   "nav": {
     "home": "Home",
     "properties": "Properties",
+    "ourProjects": "Our Projects",
     "about": "About",
     "login": "Login",
     "register": "Register",
@@ -119,6 +120,14 @@
     "description": "Description",
     "location": "Location",
     "enterMessage": "Enter your message..."
+  },
+  "ourProjects": {
+    "title": "Our Projects",
+    "subtitle": "Explore our premium properties curated by our expert team",
+    "noProjects": "No projects available at the moment.",
+    "project": "project",
+    "projects": "projects",
+    "found": "found"
   },
   "common": {
     "loading": "Loading...",
