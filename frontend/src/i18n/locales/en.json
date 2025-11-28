@@ -7,22 +7,48 @@
     "login": "Login",
     "register": "Register",
     "dashboard": "Dashboard",
-    "logout": "Logout"
+    "logout": "Logout",
+    "buy": "Buy",
+    "sell": "Sell",
+    "rent": "Rent",
+    "invest": "Invest",
+    "events": "Events",
+    "contact": "Contact"
   },
   "home": {
     "title": "Find Your Dream Home Today",
-    "subtitle": "Discover the perfect property for you",
+    "subtitle": "Discover premium properties with Deep Realties - your trusted partner in luxury real estate",
     "search": {
       "city": "City",
       "propertyType": "Property Type",
       "maxPrice": "Max Price",
       "search": "Search"
     },
+    "services": {
+      "title": "Our Services",
+      "subtitle": "Complete real estate solutions for all your needs",
+      "buy": {
+        "title": "Buy Property",
+        "description": "Find your perfect home from our curated collection of premium properties"
+      },
+      "sell": {
+        "title": "Sell Property",
+        "description": "List your property and reach thousands of potential buyers"
+      },
+      "rent": {
+        "title": "Rent Property",
+        "description": "Find rental properties or list yours for rent"
+      },
+      "invest": {
+        "title": "Invest With Us",
+        "description": "Join our investor community and earn premium returns"
+      }
+    },
     "featuredProperties": "Featured Properties",
     "featuredSubtitle": "Explore our handpicked selection of premium properties",
     "viewAll": "View All Properties",
     "whyChooseUs": "Why Choose DeepRealties",
-    "whyChooseUsSubtitle": "Experience excellence in real estate",
+    "whyChooseUsSubtitle": "Experience excellence in real estate with our trusted platform",
     "features": {
       "premium": {
         "title": "Premium Properties",
@@ -44,11 +70,17 @@
     "stats": {
       "properties": "Properties Listed",
       "customers": "Happy Customers",
-      "cities": "Cities Covered"
+      "cities": "Cities Covered",
+      "investors": "Active Investors"
     },
     "testimonials": {
       "title": "What Our Customers Say",
       "subtitle": "Real experiences from real people"
+    },
+    "invest": {
+      "title": "Invest With Deep Realties",
+      "subtitle": "Join our investment community and earn premium profits through verified real estate investments",
+      "cta": "Explore Investment Opportunities"
     },
     "cta": {
       "title": "Ready to Find Your Dream Property?",
@@ -73,7 +105,10 @@
     "condo": "Condo",
     "villa": "Villa",
     "land": "Land",
+    "plot": "Plot",
+    "flat": "Flat",
     "commercial": "Commercial",
+    "farmland": "Farm Land",
     "search": "Search",
     "clearFilters": "Clear Filters",
     "noProperties": "No properties found. Try adjusting your filters.",
@@ -127,7 +162,35 @@
     "noProjects": "No projects available at the moment.",
     "project": "project",
     "projects": "projects",
-    "found": "found"
+    "found": "found",
+    "completed": "Completed",
+    "ongoing": "Ongoing",
+    "upcoming": "Upcoming"
+  },
+  "events": {
+    "title": "Events & Exhibitions",
+    "subtitle": "Join our property exhibitions and investment seminars",
+    "upcoming": "Upcoming Events",
+    "past": "Past Events",
+    "register": "Register Now"
+  },
+  "invest": {
+    "title": "Invest With Us",
+    "subtitle": "Join our investor community and earn premium returns",
+    "opportunities": "Investment Opportunities",
+    "register": "Register as Investor"
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "Get in touch with our team",
+    "form": {
+      "name": "Full Name",
+      "email": "Email",
+      "phone": "Phone",
+      "subject": "Subject",
+      "message": "Message",
+      "send": "Send Message"
+    }
   },
   "common": {
     "loading": "Loading...",
@@ -135,4 +198,3 @@
     "success": "Success"
   }
 }
-

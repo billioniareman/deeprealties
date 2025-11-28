@@ -1,311 +1,215 @@
 import { motion } from 'framer-motion'
-import { useTranslation } from 'react-i18next'
-import { FiHome, FiUsers, FiTrendingUp, FiAward, FiShield, FiTarget, FiZap, FiHeart, FiArrowRight } from 'react-icons/fi'
+import { FiHome, FiUsers, FiTrendingUp, FiAward, FiArrowRight, FiMapPin, FiPhone, FiMail } from 'react-icons/fi'
+import { useNavigate } from 'react-router-dom'
 
 const About = () => {
-  const { t } = useTranslation()
+  const navigate = useNavigate()
+
+  // Founder info
+  const founder = {
+    name: 'Deepak Rathore',
+    role: 'Founder & CEO',
+    image: '/founder.jpg',
+    description: 'Visionary leader with years of experience in real estate, committed to helping people find their dream properties.'
+  }
 
   const features = [
-    {
-      icon: <FiHome className="w-8 h-8" />,
-      title: t('home.features.premium.title'),
-      description: t('home.features.premium.description'),
-      color: 'from-blue-500 to-blue-600'
-    },
-    {
-      icon: <FiUsers className="w-8 h-8" />,
-      title: t('home.features.expert.title'),
-      description: t('home.features.expert.description'),
-      color: 'from-emerald-500 to-emerald-600'
-    },
-    {
-      icon: <FiTrendingUp className="w-8 h-8" />,
-      title: t('home.features.insights.title'),
-      description: t('home.features.insights.description'),
-      color: 'from-purple-500 to-purple-600'
-    },
-    {
-      icon: <FiAward className="w-8 h-8" />,
-      title: t('home.features.trusted.title'),
-      description: t('home.features.trusted.description'),
-      color: 'from-orange-500 to-orange-600'
-    }
-  ]
-
-  const values = [
-    {
-      icon: <FiShield className="w-8 h-8" />,
-      title: t('about.values.integrity.title'),
-      description: t('about.values.integrity.description'),
-      color: 'from-blue-500 to-indigo-600'
-    },
-    {
-      icon: <FiTarget className="w-8 h-8" />,
-      title: t('about.values.excellence.title'),
-      description: t('about.values.excellence.description'),
-      color: 'from-emerald-500 to-teal-600'
-    },
-    {
-      icon: <FiZap className="w-8 h-8" />,
-      title: t('about.values.innovation.title'),
-      description: t('about.values.innovation.description'),
-      color: 'from-purple-500 to-pink-600'
-    },
-    {
-      icon: <FiHeart className="w-8 h-8" />,
-      title: t('about.values.customer.title'),
-      description: t('about.values.customer.description'),
-      color: 'from-red-500 to-orange-600'
-    }
-  ]
-
-  const stats = [
-    { value: '1000+', label: t('home.stats.properties'), delay: 0 },
-    { value: '500+', label: t('home.stats.customers'), delay: 0.1 },
-    { value: '50+', label: t('home.stats.cities'), delay: 0.2 }
+    { icon: <FiHome className="w-6 h-6" />, title: 'Premium Properties', desc: 'Handpicked luxury properties' },
+    { icon: <FiUsers className="w-6 h-6" />, title: 'Expert Team', desc: 'Professional guidance always' },
+    { icon: <FiTrendingUp className="w-6 h-6" />, title: 'Best Investment', desc: 'Maximum returns guaranteed' },
+    { icon: <FiAward className="w-6 h-6" />, title: 'Trusted Service', desc: '100% verified listings' }
   ]
 
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-gray-50">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-primary-navy via-primary-blue to-primary-emerald text-white py-24 overflow-hidden">
-        <div className="absolute inset-0 bg-black/20"></div>
-        <motion.div
-          className="absolute inset-0 bg-cover bg-center opacity-20"
-          style={{
-            backgroundImage: `url('https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1973&q=80')`,
-          }}
-        ></motion.div>
-        <div className="container mx-auto px-4 text-center relative z-10">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
+      <section className="relative py-24 bg-gradient-to-br from-emerald-600 via-teal-600 to-emerald-700 overflow-hidden">
+        <div className="absolute inset-0 opacity-10">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-white rounded-full blur-3xl" />
+          <div className="absolute bottom-0 left-0 w-64 h-64 bg-white rounded-full blur-3xl" />
+        </div>
+        
+        <div className="container mx-auto px-6 lg:px-8 relative text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-5xl md:text-7xl font-bold mb-6"
           >
-            {t('about.title')}
-          </motion.h1>
-          <motion.p
+            <span className="inline-block px-4 py-1.5 bg-white/20 text-white text-xs tracking-wider uppercase font-semibold rounded-full mb-4">
+              About Us
+            </span>
+            <h1 className="text-4xl md:text-5xl font-bold text-white mb-4">
+              Your Trusted Real Estate Partner
+            </h1>
+            <p className="text-lg text-white/80 max-w-2xl mx-auto">
+              Deep Realties is committed to helping you find your perfect property with trust, transparency, and expertise.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      {/* Why Choose Us */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-6 lg:px-8">
+          <motion.div
             initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.2 }}
-            className="text-xl md:text-2xl text-gray-200 max-w-3xl mx-auto leading-relaxed"
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
           >
-            {t('about.subtitle')}
-          </motion.p>
+            <h2 className="text-3xl font-bold text-gray-800 mb-3">Why Choose Deep Realties</h2>
+            <div className="w-16 h-1 bg-emerald-500 mx-auto rounded-full" />
+          </motion.div>
+
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
+            {features.map((feature, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: index * 0.1 }}
+                className="bg-white rounded-xl p-6 text-center shadow-sm hover:shadow-lg transition-shadow"
+              >
+                <div className="w-14 h-14 mx-auto mb-4 bg-emerald-100 rounded-xl flex items-center justify-center text-emerald-600">
+                  {feature.icon}
+                </div>
+                <h3 className="font-bold text-gray-800 mb-1">{feature.title}</h3>
+                <p className="text-gray-500 text-sm">{feature.desc}</p>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Founder Section */}
+      <section className="py-16 bg-white">
+        <div className="container mx-auto px-6 lg:px-8">
+          {/* Section Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="text-center mb-12"
+          >
+            <span className="inline-block px-4 py-1.5 bg-emerald-100 text-emerald-700 text-xs tracking-wider uppercase font-semibold rounded-full mb-4">
+              Leadership
+            </span>
+            <h2 className="text-3xl font-bold text-gray-800 mb-3">Meet Our Founder</h2>
+            <p className="text-gray-500 max-w-xl mx-auto">
+              The visionary behind Deep Realties, dedicated to transforming the real estate experience
+            </p>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            className="max-w-4xl mx-auto"
+          >
+            <div className="bg-gradient-to-br from-emerald-50 to-teal-50 rounded-2xl overflow-hidden shadow-lg">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-0">
+                {/* Founder Image */}
+                <div className="relative h-64 md:h-auto bg-gradient-to-br from-emerald-500 to-teal-600">
+                  <img
+                    src={founder.image}
+                    alt={founder.name}
+                    className="w-full h-full object-cover"
+                    onError={(e) => {
+                      e.target.style.display = 'none';
+                      e.target.nextSibling.style.display = 'flex';
+                    }}
+                  />
+                  <div className="absolute inset-0 hidden items-center justify-center bg-gradient-to-br from-emerald-500 to-teal-600">
+                    <div className="w-24 h-24 rounded-full bg-white/20 flex items-center justify-center text-5xl font-bold text-white">
+                      {founder.name.split(' ').map(n => n[0]).join('')}
+                    </div>
+                  </div>
+                </div>
+                
+                {/* Founder Info */}
+                <div className="p-8 flex flex-col justify-center">
+                  <span className="inline-block w-fit px-3 py-1 bg-emerald-100 text-emerald-700 text-xs font-bold uppercase tracking-wider rounded-full mb-3">
+                    {founder.role}
+                  </span>
+                  <h3 className="text-2xl font-bold text-gray-800 mb-3">
+                    {founder.name}
+                  </h3>
+                  <p className="text-gray-600 mb-4">
+                    {founder.description}
+                  </p>
+                  <div className="flex items-center space-x-4 text-sm">
+                    <div className="flex items-center text-emerald-600">
+                      <FiMapPin className="w-4 h-4 mr-1" />
+                      <span>Hatod, MP</span>
+                    </div>
+                    <div className="flex items-center text-emerald-600">
+                      <FiAward className="w-4 h-4 mr-1" />
+                      <span>10+ Years</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </motion.div>
         </div>
       </section>
 
       {/* Mission Section */}
-      <section className="container mx-auto px-4 py-20">
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
-          <motion.div
-            initial={{ opacity: 0, x: -50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 dark:text-white mb-6">
-              {t('about.mission')}
-            </h2>
-            <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed mb-4">
-              {t('about.missionText1')}
-            </p>
-            <p className="text-gray-600 dark:text-gray-400 text-lg leading-relaxed mb-6">
-              {t('about.missionText2')}
-            </p>
-            <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              className="px-6 py-3 bg-gradient-to-r from-primary-blue to-primary-emerald text-white rounded-lg hover:from-primary-navy hover:to-primary-blue transition-all shadow-lg font-semibold flex items-center space-x-2"
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-6 lg:px-8">
+          <div className="max-w-3xl mx-auto text-center">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
             >
-              <span>Explore Properties</span>
-              <FiArrowRight className="w-5 h-5" />
-            </motion.button>
-          </motion.div>
-          <motion.div
-            initial={{ opacity: 0, x: 50 }}
-            whileInView={{ opacity: 1, x: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="relative h-96 rounded-2xl overflow-hidden shadow-2xl group"
-          >
-            <motion.img
-              src="https://images.unsplash.com/photo-1560518883-ce09059eeffa?ixlib=rb-4.0.3&auto=format&fit=crop&w=1973&q=80"
-              alt="Modern building"
-              className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent"></div>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Why Choose Us Section */}
-      <section className="bg-gray-50 dark:bg-gray-900 py-20">
-        <div className="container mx-auto px-4">
-          <motion.div
-            initial={{ opacity: 0 }}
-            whileInView={{ opacity: 1 }}
-            viewport={{ once: true }}
-            className="text-center mb-16"
-          >
-            <h2 className="text-4xl md:text-5xl font-bold text-gray-800 dark:text-white mb-4">
-              {t('about.whyChooseUs')}
-            </h2>
-            <p className="text-gray-600 dark:text-gray-400 text-xl">
-              {t('about.whyChooseUsSubtitle')}
-            </p>
-          </motion.div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {features.map((feature, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, y: 50 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ delay: index * 0.1 }}
-                whileHover={{ y: -10, scale: 1.05 }}
-                className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 text-center border border-gray-100 dark:border-gray-700 hover:shadow-2xl transition-all"
-              >
-                <motion.div
-                  whileHover={{ rotate: 360 }}
-                  transition={{ duration: 0.6 }}
-                  className={`w-16 h-16 bg-gradient-to-br ${feature.color} rounded-2xl flex items-center justify-center text-white mb-6 mx-auto`}
-                >
-                  {feature.icon}
-                </motion.div>
-                <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-3">
-                  {feature.title}
-                </h3>
-                <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-                  {feature.description}
-                </p>
-              </motion.div>
-            ))}
+              <h2 className="text-3xl font-bold text-gray-800 mb-4">Our Mission</h2>
+              <p className="text-gray-600 text-lg leading-relaxed mb-6">
+                At Deep Realties, we believe that finding the perfect property should be a seamless and enjoyable experience. Our mission is to connect buyers with their dream homes and help sellers showcase their properties to the right audience.
+              </p>
+              <p className="text-gray-600 text-lg leading-relaxed">
+                With cutting-edge technology, personalized service, and a commitment to excellence, we're revolutionizing the real estate industry one property at a time.
+              </p>
+            </motion.div>
           </div>
         </div>
       </section>
 
-      {/* Values Section */}
-      <section className="container mx-auto px-4 py-20">
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-800 dark:text-white mb-4">
-            Our Core Values
-          </h2>
-          <p className="text-gray-600 dark:text-gray-400 text-xl">
-            The principles that guide everything we do
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-          {values.map((value, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              whileHover={{ y: -10 }}
-              className="bg-gradient-to-br from-white to-gray-50 dark:from-gray-800 dark:to-gray-900 rounded-2xl shadow-lg p-8 text-center border border-gray-100 dark:border-gray-700"
-            >
-              <motion.div
-                whileHover={{ scale: 1.2, rotate: 10 }}
-                className={`w-16 h-16 bg-gradient-to-br ${value.color} rounded-2xl flex items-center justify-center text-white mb-6 mx-auto shadow-lg`}
+      {/* Contact CTA */}
+      <section className="py-16 bg-gradient-to-r from-emerald-600 to-teal-600">
+        <div className="container mx-auto px-6 lg:px-8 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+          >
+            <h2 className="text-3xl font-bold text-white mb-4">
+              Ready to Find Your Dream Property?
+            </h2>
+            <p className="text-white/80 mb-8 max-w-xl mx-auto">
+              Get in touch with us today and let us help you make the right choice.
+            </p>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => navigate('/properties')}
+                className="px-8 py-3 bg-white text-emerald-600 font-bold rounded-xl shadow-lg flex items-center justify-center space-x-2"
               >
-                {value.icon}
-              </motion.div>
-              <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-3">
-                {value.title}
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400 leading-relaxed">
-                {value.description}
-              </p>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* Stats Section */}
-      <section className="bg-gradient-to-br from-primary-navy via-primary-blue to-primary-emerald py-20">
-        <div className="container mx-auto px-4">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-            {stats.map((stat, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.9 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ delay: stat.delay }}
-                className="text-white"
+                <span>Browse Properties</span>
+                <FiArrowRight className="w-5 h-5" />
+              </motion.button>
+              <motion.button
+                whileHover={{ scale: 1.02 }}
+                whileTap={{ scale: 0.98 }}
+                onClick={() => navigate('/contact')}
+                className="px-8 py-3 border-2 border-white text-white font-bold rounded-xl flex items-center justify-center space-x-2"
               >
-                <motion.div
-                  initial={{ scale: 0 }}
-                  whileInView={{ scale: 1 }}
-                  viewport={{ once: true }}
-                  transition={{ delay: 0.2 + stat.delay, type: 'spring' }}
-                  className="text-6xl md:text-7xl font-bold mb-4"
-                >
-                  {stat.value}
-                </motion.div>
-                <div className="text-xl md:text-2xl text-gray-200 font-medium">
-                  {stat.label}
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Team Section */}
-      <section className="container mx-auto px-4 py-20">
-        <motion.div
-          initial={{ opacity: 0 }}
-          whileInView={{ opacity: 1 }}
-          viewport={{ once: true }}
-          className="text-center mb-16"
-        >
-          <h2 className="text-4xl md:text-5xl font-bold text-gray-800 dark:text-white mb-4">
-            Meet Our Team
-          </h2>
-          <p className="text-gray-600 dark:text-gray-400 text-xl">
-            The experts behind DeepRealties
-          </p>
-        </motion.div>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {[
-            { name: 'John Smith', role: 'CEO & Founder', image: 'https://i.pravatar.cc/150?img=12' },
-            { name: 'Emily Johnson', role: 'Head of Sales', image: 'https://i.pravatar.cc/150?img=47' },
-            { name: 'Michael Chen', role: 'Tech Lead', image: 'https://i.pravatar.cc/150?img=33' }
-          ].map((member, index) => (
-            <motion.div
-              key={index}
-              initial={{ opacity: 0, y: 50 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ delay: index * 0.1 }}
-              whileHover={{ y: -10 }}
-              className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-8 text-center border border-gray-100 dark:border-gray-700"
-            >
-              <motion.img
-                src={member.image}
-                alt={member.name}
-                className="w-24 h-24 rounded-full mx-auto mb-4 object-cover border-4 border-primary-blue"
-                whileHover={{ scale: 1.1 }}
-              />
-              <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-2">
-                {member.name}
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                {member.role}
-              </p>
-            </motion.div>
-          ))}
+                <FiPhone className="w-5 h-5" />
+                <span>Contact Us</span>
+              </motion.button>
+            </div>
+          </motion.div>
         </div>
       </section>
     </div>

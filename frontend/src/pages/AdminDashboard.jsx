@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react'
 import { motion } from 'framer-motion'
-import { FiUsers, FiHome, FiMail, FiTrendingUp, FiMapPin, FiEdit, FiTrash2, FiCheck, FiX } from 'react-icons/fi'
+import { FiUsers, FiHome, FiMail, FiTrendingUp, FiMapPin, FiEdit, FiTrash2, FiCheck, FiX, FiClock, FiEye } from 'react-icons/fi'
 import { useAuth } from '../context/AuthContext'
+import { Link } from 'react-router-dom'
 import api from '../utils/api'
 import toast from 'react-hot-toast'
 
@@ -10,9 +11,10 @@ const AdminDashboard = () => {
   const [dashboardData, setDashboardData] = useState(null)
   const [users, setUsers] = useState([])
   const [properties, setProperties] = useState([])
+  const [pendingProperties, setPendingProperties] = useState([])
   const [enquiries, setEnquiries] = useState([])
   const [loading, setLoading] = useState(true)
-  const [activeTab, setActiveTab] = useState('overview')
+  const [activeTab, setActiveTab] = useState('pending')
 
   useEffect(() => {
     fetchDashboardData()
@@ -21,17 +23,20 @@ const AdminDashboard = () => {
   const fetchDashboardData = async () => {
     setLoading(true)
     try {
-      const [dashboardRes, usersRes, propertiesRes, enquiriesRes] = await Promise.all([
+      const [dashboardRes, usersRes, propertiesRes, pendingRes, enquiriesRes] = await Promise.all([
         api.get('/api/admin/dashboard'),
         api.get('/api/admin/users'),
         api.get('/api/admin/properties'),
+        api.get('/api/properties/pending'),
         api.get('/api/admin/enquiries'),
       ])
       setDashboardData(dashboardRes.data)
       setUsers(usersRes.data)
       setProperties(propertiesRes.data)
+      setPendingProperties(pendingRes.data || [])
       setEnquiries(enquiriesRes.data)
     } catch (error) {
+      console.error('Dashboard error:', error)
       toast.error('Failed to fetch dashboard data')
     } finally {
       setLoading(false)
@@ -58,6 +63,33 @@ const AdminDashboard = () => {
     } catch (error) {
       toast.error('Failed to delete property')
     }
+  }
+
+  const approveProperty = async (propertyId) => {
+    try {
+      await api.put(`/api/properties/${propertyId}/approve`)
+      toast.success('Property approved successfully!')
+      fetchDashboardData()
+    } catch (error) {
+      toast.error('Failed to approve property')
+    }
+  }
+
+  const rejectProperty = async (propertyId) => {
+    if (!window.confirm('Are you sure you want to reject this property?')) return
+    try {
+      await api.put(`/api/properties/${propertyId}/reject`)
+      toast.success('Property rejected')
+      fetchDashboardData()
+    } catch (error) {
+      toast.error('Failed to reject property')
+    }
+  }
+
+  const formatPrice = (price) => {
+    if (price >= 10000000) return `₹${(price / 10000000).toFixed(2)} Cr`
+    if (price >= 100000) return `₹${(price / 100000).toFixed(2)} L`
+    return `₹${price?.toLocaleString()}`
   }
 
   if (loading) {
@@ -172,13 +204,29 @@ const AdminDashboard = () => {
 
       {/* Tabs */}
       <div className="mb-8">
-        <div className="flex space-x-4 border-b border-gray-200 dark:border-gray-700">
+        <div className="flex flex-wrap gap-2 border-b border-gray-200 dark:border-gray-700">
+          <button
+            onClick={() => setActiveTab('pending')}
+            className={`px-4 py-2 font-medium transition-colors flex items-center space-x-2 ${
+              activeTab === 'pending'
+                ? 'text-amber-600 border-b-2 border-amber-500'
+                : 'text-gray-600 dark:text-gray-400 hover:text-amber-600'
+            }`}
+          >
+            <FiClock className="w-4 h-4" />
+            <span>Pending Approval</span>
+            {pendingProperties.length > 0 && (
+              <span className="bg-amber-500 text-white text-xs px-2 py-0.5 rounded-full">
+                {pendingProperties.length}
+              </span>
+            )}
+          </button>
           <button
             onClick={() => setActiveTab('overview')}
             className={`px-4 py-2 font-medium transition-colors ${
               activeTab === 'overview'
-                ? 'text-primary-blue border-b-2 border-primary-blue'
-                : 'text-gray-600 dark:text-gray-400 hover:text-primary-blue'
+                ? 'text-emerald-600 border-b-2 border-emerald-500'
+                : 'text-gray-600 dark:text-gray-400 hover:text-emerald-600'
             }`}
           >
             Overview
@@ -187,8 +235,8 @@ const AdminDashboard = () => {
             onClick={() => setActiveTab('users')}
             className={`px-4 py-2 font-medium transition-colors ${
               activeTab === 'users'
-                ? 'text-primary-blue border-b-2 border-primary-blue'
-                : 'text-gray-600 dark:text-gray-400 hover:text-primary-blue'
+                ? 'text-emerald-600 border-b-2 border-emerald-500'
+                : 'text-gray-600 dark:text-gray-400 hover:text-emerald-600'
             }`}
           >
             Users ({users.length})
@@ -197,8 +245,8 @@ const AdminDashboard = () => {
             onClick={() => setActiveTab('properties')}
             className={`px-4 py-2 font-medium transition-colors ${
               activeTab === 'properties'
-                ? 'text-primary-blue border-b-2 border-primary-blue'
-                : 'text-gray-600 dark:text-gray-400 hover:text-primary-blue'
+                ? 'text-emerald-600 border-b-2 border-emerald-500'
+                : 'text-gray-600 dark:text-gray-400 hover:text-emerald-600'
             }`}
           >
             Properties ({properties.length})
@@ -207,14 +255,122 @@ const AdminDashboard = () => {
             onClick={() => setActiveTab('enquiries')}
             className={`px-4 py-2 font-medium transition-colors ${
               activeTab === 'enquiries'
-                ? 'text-primary-blue border-b-2 border-primary-blue'
-                : 'text-gray-600 dark:text-gray-400 hover:text-primary-blue'
+                ? 'text-emerald-600 border-b-2 border-emerald-500'
+                : 'text-gray-600 dark:text-gray-400 hover:text-emerald-600'
             }`}
           >
             Enquiries ({enquiries.length})
           </button>
         </div>
       </div>
+
+      {/* Pending Properties Tab */}
+      {activeTab === 'pending' && (
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+        >
+          {pendingProperties.length === 0 ? (
+            <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg p-12 text-center">
+              <div className="w-20 h-20 bg-emerald-100 rounded-2xl flex items-center justify-center mx-auto mb-4">
+                <FiCheck className="w-10 h-10 text-emerald-600" />
+              </div>
+              <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-2">All Caught Up!</h3>
+              <p className="text-gray-500">No properties pending approval</p>
+            </div>
+          ) : (
+            <div className="space-y-4">
+              {pendingProperties.map((property, index) => (
+                <motion.div
+                  key={property.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: index * 0.1 }}
+                  className="bg-white dark:bg-gray-800 rounded-2xl shadow-lg border border-amber-200 overflow-hidden"
+                >
+                  <div className="flex flex-col md:flex-row">
+                    {/* Image */}
+                    <div className="w-full md:w-64 h-48 md:h-auto bg-gradient-to-br from-emerald-100 to-teal-100 flex items-center justify-center">
+                      {property.images?.[0] ? (
+                        <img src={property.images[0]} alt={property.title} className="w-full h-full object-cover" />
+                      ) : (
+                        <FiHome className="w-12 h-12 text-emerald-400" />
+                      )}
+                    </div>
+                    
+                    {/* Content */}
+                    <div className="flex-1 p-6">
+                      <div className="flex items-start justify-between mb-3">
+                        <div>
+                          <span className="inline-block px-3 py-1 bg-amber-100 text-amber-700 text-xs font-bold rounded-full mb-2">
+                            PENDING APPROVAL
+                          </span>
+                          <h3 className="text-xl font-bold text-gray-800 dark:text-white">
+                            {property.title}
+                          </h3>
+                        </div>
+                        <span className="text-2xl font-bold text-emerald-600">
+                          {formatPrice(property.price)}
+                        </span>
+                      </div>
+                      
+                      <p className="text-gray-600 dark:text-gray-400 text-sm mb-3 line-clamp-2">
+                        {property.description}
+                      </p>
+                      
+                      <div className="flex flex-wrap gap-4 text-sm text-gray-500 mb-4">
+                        <span className="flex items-center">
+                          <FiMapPin className="w-4 h-4 mr-1" />
+                          {property.locality}, {property.city}
+                        </span>
+                        <span className="capitalize">{property.property_type}</span>
+                        <span>{property.area_sqft} sqft</span>
+                      </div>
+
+                      {/* Contact Info */}
+                      {(property.full_name || property.email || property.phone) && (
+                        <div className="bg-gray-50 dark:bg-gray-700 rounded-xl p-3 mb-4">
+                          <p className="text-xs text-gray-500 mb-1">Submitted by:</p>
+                          <div className="flex flex-wrap gap-4 text-sm">
+                            {property.full_name && <span className="font-semibold text-gray-800 dark:text-white">{property.full_name}</span>}
+                            {property.email && <span className="text-gray-600">{property.email}</span>}
+                            {property.phone && <span className="text-gray-600">{property.phone}</span>}
+                          </div>
+                        </div>
+                      )}
+                      
+                      {/* Actions */}
+                      <div className="flex flex-wrap gap-3">
+                        <button
+                          onClick={() => approveProperty(property.id)}
+                          className="flex items-center space-x-2 px-6 py-2.5 bg-emerald-500 hover:bg-emerald-600 text-white font-semibold rounded-xl transition-colors"
+                        >
+                          <FiCheck className="w-4 h-4" />
+                          <span>Approve</span>
+                        </button>
+                        <button
+                          onClick={() => rejectProperty(property.id)}
+                          className="flex items-center space-x-2 px-6 py-2.5 bg-red-500 hover:bg-red-600 text-white font-semibold rounded-xl transition-colors"
+                        >
+                          <FiX className="w-4 h-4" />
+                          <span>Reject</span>
+                        </button>
+                        <Link
+                          to={`/properties/${property.id}`}
+                          className="flex items-center space-x-2 px-6 py-2.5 bg-gray-100 hover:bg-gray-200 text-gray-700 font-semibold rounded-xl transition-colors"
+                        >
+                          <FiEye className="w-4 h-4" />
+                          <span>View</span>
+                        </Link>
+                      </div>
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          )}
+        </motion.div>
+      )}
 
       {/* Overview Tab */}
       {activeTab === 'overview' && (
