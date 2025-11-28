@@ -9,7 +9,6 @@ MONGODB_URI_RAW = os.getenv("MONGODB_URI", "mongodb://localhost:27017")
 DATABASE_NAME = os.getenv("DATABASE_NAME", "deeprealties")
 
 
-
 def encode_mongodb_uri(uri: str) -> str:
     """Encode username and password in MongoDB URI according to RFC 3986."""
     try:
