@@ -30,7 +30,7 @@ const Register = () => {
     <div className="min-h-screen flex bg-gray-50">
       {/* Left Side - Form */}
       <div className="w-full lg:w-1/2 flex items-center justify-center px-6 py-12">
-        <motion.div
+      <motion.div
           initial={{ opacity: 0, x: -30 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.8, delay: 0.3 }}
@@ -49,7 +49,7 @@ const Register = () => {
           <div className="bg-white rounded-2xl shadow-xl border border-gray-100 p-10">
             <div className="text-center mb-8">
               <h1 className="text-3xl font-bold text-gray-800 mb-2">
-                Create Account
+          Create Account
               </h1>
               <p className="text-gray-500">
                 Join our exclusive real estate community
@@ -57,85 +57,85 @@ const Register = () => {
             </div>
 
             <form onSubmit={handleSubmit} className="space-y-5">
-              <div>
+          <div>
                 <label className="block text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wider">
-                  Full Name
-                </label>
-                <div className="relative">
+              Full Name
+            </label>
+            <div className="relative">
                   <div className="absolute left-3 top-1/2 transform -translate-y-1/2 w-8 h-8 bg-emerald-50 rounded-lg flex items-center justify-center">
                     <FiUser className="w-4 h-4 text-emerald-600" />
                   </div>
-                  <input
-                    type="text"
-                    required
-                    value={formData.full_name}
-                    onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
+              <input
+                type="text"
+                required
+                value={formData.full_name}
+                onChange={(e) => setFormData({ ...formData, full_name: e.target.value })}
                     className="w-full pl-14 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all"
                     placeholder="John Doe"
-                  />
-                </div>
-              </div>
+              />
+            </div>
+          </div>
 
-              <div>
+          <div>
                 <label className="block text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wider">
                   Email Address
-                </label>
-                <div className="relative">
+            </label>
+            <div className="relative">
                   <div className="absolute left-3 top-1/2 transform -translate-y-1/2 w-8 h-8 bg-emerald-50 rounded-lg flex items-center justify-center">
                     <FiMail className="w-4 h-4 text-emerald-600" />
                   </div>
-                  <input
-                    type="email"
-                    required
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              <input
+                type="email"
+                required
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     className="w-full pl-14 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all"
                     placeholder="your@email.com"
-                  />
-                </div>
-              </div>
+              />
+            </div>
+          </div>
 
-              <div>
+          <div>
                 <label className="block text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wider">
-                  Phone (Optional)
-                </label>
-                <div className="relative">
+              Phone (Optional)
+            </label>
+            <div className="relative">
                   <div className="absolute left-3 top-1/2 transform -translate-y-1/2 w-8 h-8 bg-emerald-50 rounded-lg flex items-center justify-center">
                     <FiPhone className="w-4 h-4 text-emerald-600" />
                   </div>
-                  <input
-                    type="tel"
-                    value={formData.phone}
-                    onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
+              <input
+                type="tel"
+                value={formData.phone}
+                onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                     className="w-full pl-14 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all"
                     placeholder="+91 98765 43210"
-                  />
-                </div>
-              </div>
+              />
+            </div>
+          </div>
 
-              <div>
+          <div>
                 <label className="block text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wider">
-                  Password
-                </label>
-                <div className="relative">
+              Password
+            </label>
+            <div className="relative">
                   <div className="absolute left-3 top-1/2 transform -translate-y-1/2 w-8 h-8 bg-emerald-50 rounded-lg flex items-center justify-center">
                     <FiLock className="w-4 h-4 text-emerald-600" />
                   </div>
-                  <input
-                    type="password"
-                    required
-                    value={formData.password}
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+              <input
+                type="password"
+                required
+                value={formData.password}
+                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                     className="w-full pl-14 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all"
                     placeholder="••••••••"
-                  />
-                </div>
-              </div>
+              />
+            </div>
+          </div>
 
-              <div>
+          <div>
                 <label className="block text-xs font-semibold text-gray-500 mb-3 uppercase tracking-wider">
-                  I want to
-                </label>
+              I want to
+            </label>
                 <div className="grid grid-cols-2 gap-4">
                   <motion.button
                     type="button"
@@ -174,15 +174,15 @@ const Register = () => {
                     </span>
                   </motion.button>
                 </div>
-              </div>
+          </div>
 
               <motion.button
-                type="submit"
-                disabled={loading}
+            type="submit"
+            disabled={loading}
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
                 className="w-full py-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-bold rounded-xl shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/40 transition-all flex items-center justify-center space-x-2 mt-6 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
+          >
                 {loading ? (
                   <motion.div 
                     animate={{ rotate: 360 }}
@@ -196,7 +196,7 @@ const Register = () => {
                   </>
                 )}
               </motion.button>
-            </form>
+        </form>
 
             {/* Divider */}
             <div className="relative my-8">
@@ -207,11 +207,11 @@ const Register = () => {
             </div>
 
             <p className="text-center text-gray-600">
-              Already have an account?{' '}
+          Already have an account?{' '}
               <Link to="/login" className="text-emerald-600 hover:text-emerald-700 transition-colors font-semibold">
                 Sign In
-              </Link>
-            </p>
+          </Link>
+        </p>
           </div>
         </motion.div>
       </div>
@@ -245,7 +245,7 @@ const Register = () => {
             <p className="text-white/80 max-w-md mx-auto">
               Get access to exclusive listings, market insights, and personalized recommendations.
             </p>
-          </motion.div>
+      </motion.div>
         </div>
       </div>
     </div>

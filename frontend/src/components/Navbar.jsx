@@ -1,21 +1,15 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAuth } from '../context/AuthContext'
-import { useTheme } from '../context/ThemeContext'
-import { useLanguage } from '../context/LanguageContext'
-import { useTranslation } from 'react-i18next'
 import { useState, useEffect } from 'react'
 import { 
-  FiSun, FiMoon, FiUser, FiLogOut, FiMenu, FiX, FiGlobe, 
+  FiUser, FiLogOut, FiMenu, FiX, 
   FiChevronDown, FiHome, FiCalendar, FiInfo, FiPhone, FiGrid,
   FiDollarSign, FiKey, FiTrendingUp
 } from 'react-icons/fi'
 
 const Navbar = () => {
   const { user, logout, isAuthenticated } = useAuth()
-  const { darkMode, toggleDarkMode } = useTheme()
-  const { language, changeLanguage } = useLanguage()
-  const { t } = useTranslation()
   const navigate = useNavigate()
   const location = useLocation()
   const [isScrolled, setIsScrolled] = useState(false)
@@ -38,10 +32,6 @@ const Navbar = () => {
   const handleLogout = () => {
     logout()
     navigate('/')
-  }
-
-  const toggleLanguage = () => {
-    changeLanguage(language === 'en' ? 'hi' : 'en')
   }
 
   const services = [
@@ -210,49 +200,6 @@ const Navbar = () => {
 
             {/* Right Side Actions */}
             <div className="hidden lg:flex items-center space-x-3">
-              {/* Language Switcher */}
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={toggleLanguage}
-                className="p-2.5 rounded-xl bg-gray-100 hover:bg-emerald-50 transition-colors group"
-              >
-                <FiGlobe className="w-4 h-4 text-gray-600 group-hover:text-emerald-600 transition-colors" />
-              </motion.button>
-
-              {/* Theme Toggle */}
-              <motion.button
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
-                onClick={toggleDarkMode}
-                className="p-2.5 rounded-xl bg-gray-100 hover:bg-emerald-50 transition-colors group"
-              >
-                <AnimatePresence mode="wait">
-                  {darkMode ? (
-                    <motion.div
-                      key="sun"
-                      initial={{ rotate: -90, opacity: 0 }}
-                      animate={{ rotate: 0, opacity: 1 }}
-                      exit={{ rotate: 90, opacity: 0 }}
-                    >
-                      <FiSun className="w-4 h-4 text-amber-500" />
-                    </motion.div>
-                  ) : (
-                    <motion.div
-                      key="moon"
-                      initial={{ rotate: 90, opacity: 0 }}
-                      animate={{ rotate: 0, opacity: 1 }}
-                      exit={{ rotate: -90, opacity: 0 }}
-                    >
-                      <FiMoon className="w-4 h-4 text-gray-600" />
-                    </motion.div>
-                  )}
-                </AnimatePresence>
-              </motion.button>
-
-              {/* Divider */}
-              <div className="w-px h-8 bg-gray-200" />
-
               {isAuthenticated ? (
                 <div className="flex items-center space-x-3">
                   <Link
@@ -422,28 +369,6 @@ const Navbar = () => {
                       <span className="font-semibold text-sm">{link.label}</span>
                     </Link>
                   ))}
-                </div>
-
-                <div className="h-px bg-gray-100 mb-6" />
-
-                {/* Settings */}
-                <div className="flex items-center justify-between px-3 py-3 mb-3 bg-gray-50 rounded-xl">
-                  <span className="text-sm font-semibold text-gray-600">Theme</span>
-                  <button
-                    onClick={toggleDarkMode}
-                    className="p-2.5 bg-white text-emerald-600 rounded-lg shadow-sm"
-                  >
-                    {darkMode ? <FiSun className="w-4 h-4" /> : <FiMoon className="w-4 h-4" />}
-                  </button>
-                </div>
-                <div className="flex items-center justify-between px-3 py-3 mb-6 bg-gray-50 rounded-xl">
-                  <span className="text-sm font-semibold text-gray-600">Language</span>
-                  <button
-                    onClick={toggleLanguage}
-                    className="px-4 py-1.5 text-sm font-bold bg-white text-emerald-600 rounded-lg shadow-sm"
-                  >
-                    {language === 'en' ? 'हिंदी' : 'EN'}
-                  </button>
                 </div>
 
                 {/* Auth */}

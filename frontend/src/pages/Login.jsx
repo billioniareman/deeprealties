@@ -38,19 +38,19 @@ const Login = () => {
           <div className="absolute bottom-20 left-20 w-64 h-64 bg-white rounded-full blur-3xl" />
         </div>
         <div className="absolute inset-0 flex items-center justify-center p-12">
-          <motion.div
+      <motion.div
             initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
+        animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5, duration: 0.8 }}
             className="text-center"
-          >
+      >
             <span className="inline-block px-4 py-1.5 bg-white/20 text-white text-xs tracking-wider uppercase font-semibold rounded-full mb-6">
-              Welcome Back
+          Welcome Back
             </span>
             <h2 className="text-4xl md:text-5xl text-white font-bold leading-tight mb-6">
               Discover Your <br />
               <span className="text-emerald-200 italic">Dream Property</span>
-            </h2>
+        </h2>
             <p className="text-white/80 max-w-md mx-auto">
               Access exclusive listings and premium real estate opportunities.
             </p>
@@ -86,44 +86,44 @@ const Login = () => {
               </p>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-6">
-              <div>
+        <form onSubmit={handleSubmit} className="space-y-6">
+          <div>
                 <label className="block text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wider">
                   Email Address
-                </label>
-                <div className="relative">
+            </label>
+            <div className="relative">
                   <div className="absolute left-3 top-1/2 transform -translate-y-1/2 w-8 h-8 bg-emerald-50 rounded-lg flex items-center justify-center">
                     <FiMail className="w-4 h-4 text-emerald-600" />
                   </div>
-                  <input
-                    type="email"
-                    required
-                    value={formData.email}
-                    onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+              <input
+                type="email"
+                required
+                value={formData.email}
+                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                     className="w-full pl-14 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all"
                     placeholder="your@email.com"
-                  />
-                </div>
-              </div>
+              />
+            </div>
+          </div>
 
-              <div>
+          <div>
                 <label className="block text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wider">
-                  Password
-                </label>
-                <div className="relative">
+              Password
+            </label>
+            <div className="relative">
                   <div className="absolute left-3 top-1/2 transform -translate-y-1/2 w-8 h-8 bg-emerald-50 rounded-lg flex items-center justify-center">
                     <FiLock className="w-4 h-4 text-emerald-600" />
                   </div>
-                  <input
-                    type="password"
-                    required
-                    value={formData.password}
-                    onChange={(e) => setFormData({ ...formData, password: e.target.value })}
+              <input
+                type="password"
+                required
+                value={formData.password}
+                onChange={(e) => setFormData({ ...formData, password: e.target.value })}
                     className="w-full pl-14 pr-4 py-3 bg-gray-50 border border-gray-200 rounded-xl text-gray-800 focus:outline-none focus:ring-2 focus:ring-emerald-500/30 focus:border-emerald-500 transition-all"
                     placeholder="••••••••"
-                  />
-                </div>
-              </div>
+              />
+            </div>
+          </div>
 
               <div className="flex items-center justify-between text-sm">
                 <label className="flex items-center space-x-2 cursor-pointer group">
@@ -138,12 +138,12 @@ const Login = () => {
               </div>
 
               <motion.button
-                type="submit"
-                disabled={loading}
+            type="submit"
+            disabled={loading}
                 whileHover={{ scale: 1.01 }}
                 whileTap={{ scale: 0.99 }}
                 className="w-full py-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-bold rounded-xl shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/40 transition-all flex items-center justify-center space-x-2 disabled:opacity-50 disabled:cursor-not-allowed"
-              >
+          >
                 {loading ? (
                   <motion.div 
                     animate={{ rotate: 360 }}
@@ -157,7 +157,7 @@ const Login = () => {
                   </>
                 )}
               </motion.button>
-            </form>
+        </form>
 
             {/* Divider */}
             <div className="relative my-8">
@@ -168,13 +168,13 @@ const Login = () => {
             </div>
 
             <p className="text-center text-gray-600">
-              Don't have an account?{' '}
+          Don't have an account?{' '}
               <Link to="/register" className="text-emerald-600 hover:text-emerald-700 transition-colors font-semibold">
                 Create Account
-              </Link>
-            </p>
+          </Link>
+        </p>
           </div>
-        </motion.div>
+      </motion.div>
       </div>
     </div>
   )

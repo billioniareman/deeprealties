@@ -3,8 +3,6 @@ import { useNavigate, Link } from 'react-router-dom'
 import { motion, useScroll, useTransform, useInView, AnimatePresence } from 'framer-motion'
 import { useTranslation } from 'react-i18next'
 import { FiSearch, FiMapPin, FiHome, FiTrendingUp, FiUsers, FiAward, FiStar, FiArrowRight, FiArrowUpRight, FiPhone, FiShield, FiCheck, FiKey, FiDollarSign, FiMail } from 'react-icons/fi'
-import api from '../utils/api'
-import PropertyCard from '../components/PropertyCard'
 
 // ============================================
 // ELEGANT GREEN THEME COMPONENTS
@@ -273,8 +271,6 @@ const Home = () => {
   const { scrollY } = useScroll()
   
   const [searchFilters, setSearchFilters] = useState({ city: '', property_type: '', max_price: '' })
-  const [featuredProperties, setFeaturedProperties] = useState([])
-  const [loading, setLoading] = useState(true)
   const [activeTestimonial, setActiveTestimonial] = useState(0)
   const [hoveredService, setHoveredService] = useState(null)
 
@@ -282,18 +278,9 @@ const Home = () => {
   const heroY = useTransform(scrollY, [0, 400], [0, -60])
 
   useEffect(() => {
-    fetchFeaturedProperties()
     const timer = setInterval(() => setActiveTestimonial(p => (p + 1) % testimonials.length), 6000)
     return () => clearInterval(timer)
   }, [])
-
-  const fetchFeaturedProperties = async () => {
-    try {
-      const res = await api.get('/api/properties', { params: { limit: 6 } })
-      setFeaturedProperties(res.data)
-    } catch (e) { console.error(e) }
-    finally { setLoading(false) }
-  }
 
   const handleSearch = (e) => {
     e.preventDefault()
@@ -303,10 +290,10 @@ const Home = () => {
   }
 
   const services = [
-    { id: 'buy', title: 'Buy Property', subtitle: 'Find Your Dream Home', icon: <FiHome className="w-6 h-6" />, desc: 'Houses, Apartments, Villas & More', color: 'from-emerald-500 to-teal-500' },
-    { id: 'sell', title: 'Sell Property', subtitle: 'Get Best Value', icon: <FiDollarSign className="w-6 h-6" />, desc: 'Quick & Hassle-free Sales', color: 'from-teal-500 to-cyan-500' },
-    { id: 'rent', title: 'Rent Property', subtitle: 'Flexible Options', icon: <FiKey className="w-6 h-6" />, desc: 'Residential & Commercial Rentals', color: 'from-cyan-500 to-emerald-500' },
-    { id: 'invest', title: 'Invest With Us', subtitle: 'Grow Your Wealth', icon: <FiTrendingUp className="w-6 h-6" />, desc: 'High Returns Investment Plans', color: 'from-emerald-600 to-green-500' },
+    { id: 'buy', title: 'Buy Property', subtitle: 'Find Your Dream Home', icon: <FiHome className="w-6 h-6" />, desc: 'We help you find the best homes that fit your life and your future plans. We look past the listings to find the right property for you.', color: 'from-emerald-500 to-teal-500' },
+    { id: 'sell', title: 'Sell Property', subtitle: 'Get Best Value', icon: <FiDollarSign className="w-6 h-6" />, desc: 'Get the best price for your property, fast. We use smart marketing and accurate pricing to attract the right buyers right away.', color: 'from-teal-500 to-cyan-500' },
+    { id: 'rent', title: 'Rent Property', subtitle: 'Flexible Options', icon: <FiKey className="w-6 h-6" />, desc: 'Easily find high-quality places to rent or get professional help managing your rental properties. We make leasing simple.', color: 'from-cyan-500 to-emerald-500' },
+    { id: 'invest', title: 'Invest With Us', subtitle: 'Grow Your Wealth', icon: <FiTrendingUp className="w-6 h-6" />, desc: 'Invest in real estate — the safest way to build long-term wealth. Your money grows steadily and delivers high returns over the years.', color: 'from-emerald-600 to-green-500' },
   ]
 
   const stats = [
@@ -314,15 +301,6 @@ const Home = () => {
     { value: '50', suffix: '+', label: 'Happy Clients' },
     { value: '5', suffix: '+', label: 'Cities Covered' },
     { value: '2', suffix: '+', label: 'Years Experience' },
-  ]
-
-  const propertyTypes = [
-    { name: 'Houses', icon: '🏠', count: '500+' },
-    { name: 'Apartments', icon: '🏢', count: '400+' },
-    { name: 'Villas', icon: '🏡', count: '200+' },
-    { name: 'Plots', icon: '📍', count: '300+' },
-    { name: 'Commercial', icon: '🏪', count: '150+' },
-    { name: 'Farm Land', icon: '🌾', count: '100+' },
   ]
 
   const features = [
@@ -375,11 +353,11 @@ const Home = () => {
             >
               <h1 className="font-display leading-[1.15]">
                 <span className="block text-gray-800 text-3xl md:text-4xl lg:text-5xl font-bold mb-2">
-                  Find Your Perfect
+                  The Future of Your Home,
                 </span>
                 <span className="block text-4xl md:text-5xl lg:text-6xl xl:text-7xl font-bold">
                   <span className="bg-gradient-to-r from-emerald-600 via-teal-500 to-emerald-500 bg-clip-text text-transparent">
-                    Dream Property
+                    Managed by Experts
                   </span>
                 </span>
               </h1>
@@ -392,8 +370,8 @@ const Home = () => {
               transition={{ duration: 0.8, delay: 0.6 }}
               className="text-gray-600 text-base md:text-lg max-w-2xl mx-auto mb-10 leading-relaxed"
             >
-              Houses, Apartments, Villas, Plots, Commercial Spaces & More.
-              <span className="text-emerald-600 font-semibold"> Your trusted partner</span> in finding the perfect property.
+                From local market intelligence to securing optimal financing, we are your committed partners for a frictionless experience.
+                {/* <span className="text-emerald-600 font-semibold"> Your trusted partner</span> in finding the perfect property. */}
             </motion.p>
 
             {/* CTAs */}
@@ -410,7 +388,7 @@ const Home = () => {
                 className="group px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-500 text-white text-sm font-bold tracking-wide rounded-full shadow-xl shadow-emerald-500/30"
               >
                 <span className="flex items-center gap-2">
-                  Explore Properties
+                  View Properties
                   <FiArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
                 </span>
               </motion.button>
@@ -423,7 +401,7 @@ const Home = () => {
               >
                 <span className="flex items-center gap-2">
                   <FiPhone className="w-4 h-4" />
-                  Free Consultation
+                  Talk to an Expert
                 </span>
               </motion.button>
             </motion.div>
@@ -493,33 +471,6 @@ const Home = () => {
             </motion.div>
           </div>
         </motion.div>
-      </section>
-
-      {/* ==================== PROPERTY TYPES ==================== */}
-      <section className="py-16 bg-gradient-to-b from-white to-gray-50">
-        <div className="container mx-auto px-6 lg:px-8">
-          <Reveal className="text-center mb-10">
-            <h2 className="text-2xl md:text-3xl font-bold text-gray-800">
-              Browse by <span className="text-emerald-600">Property Type</span>
-            </h2>
-          </Reveal>
-          
-          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-4">
-            {propertyTypes.map((type, i) => (
-              <Reveal key={i} delay={i * 0.05}>
-                <motion.div
-                  whileHover={{ y: -6, boxShadow: '0 20px 40px rgba(0,0,0,0.1)' }}
-                  onClick={() => navigate(`/properties?type=${type.name.toLowerCase()}`)}
-                  className="text-center p-5 bg-white border border-gray-100 rounded-2xl cursor-pointer hover:border-emerald-200 transition-all"
-                >
-                  <span className="text-3xl mb-2 block">{type.icon}</span>
-                  <h3 className="text-gray-800 text-sm font-semibold">{type.name}</h3>
-                  <p className="text-emerald-600 text-xs mt-1">{type.count}</p>
-                </motion.div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
       </section>
 
       {/* ==================== SERVICES ==================== */}
@@ -637,88 +588,6 @@ const Home = () => {
               </Reveal>
             ))}
           </div>
-        </div>
-      </section>
-
-      {/* ==================== FEATURED PROPERTIES ==================== */}
-      <section className="relative py-20 bg-gradient-to-b from-gray-50 to-white overflow-hidden">
-        {/* Subtle animated background */}
-        <div className="absolute inset-0 pointer-events-none">
-          {/* Floating property icons */}
-          <motion.div
-            animate={{ y: [-15, 15, -15], rotate: [0, 5, 0] }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-20 left-[5%] text-4xl opacity-10"
-          >
-            🏠
-          </motion.div>
-          <motion.div
-            animate={{ y: [15, -15, 15], rotate: [0, -5, 0] }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-40 right-[8%] text-3xl opacity-10"
-          >
-            🏢
-          </motion.div>
-          <motion.div
-            animate={{ y: [-10, 10, -10], rotate: [0, 10, 0] }}
-            transition={{ duration: 7, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-            className="absolute bottom-32 left-[12%] text-3xl opacity-10"
-          >
-            🏡
-          </motion.div>
-          <motion.div
-            animate={{ y: [10, -10, 10] }}
-            transition={{ duration: 9, repeat: Infinity, ease: "easeInOut", delay: 2 }}
-            className="absolute bottom-20 right-[15%] text-4xl opacity-10"
-          >
-            🏘️
-          </motion.div>
-          
-          {/* Gradient accents */}
-          <motion.div
-            animate={{ scale: [1, 1.2, 1], opacity: [0.3, 0.5, 0.3] }}
-            transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-0 right-1/4 w-60 h-60 bg-emerald-100/40 rounded-full blur-3xl"
-          />
-        </div>
-        <div className="container mx-auto px-6 lg:px-8 relative">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
-            <Reveal>
-              <span className="inline-block px-4 py-1.5 bg-emerald-100 text-emerald-700 text-xs tracking-wider uppercase font-semibold rounded-full mb-4">
-                Featured Listings
-              </span>
-              <h2 className="text-3xl md:text-4xl font-bold text-gray-800">
-                Premium <span className="text-emerald-600">Properties</span>
-              </h2>
-            </Reveal>
-            
-            <Reveal delay={0.2}>
-              <motion.button
-                whileHover={{ x: 4 }}
-                onClick={() => navigate('/properties')}
-                className="mt-6 md:mt-0 flex items-center gap-2 px-6 py-2.5 bg-emerald-50 text-emerald-600 text-sm font-semibold rounded-full hover:bg-emerald-100 transition-colors"
-              >
-                View All Properties
-                <FiArrowUpRight className="w-4 h-4" />
-              </motion.button>
-            </Reveal>
-          </div>
-
-          {loading ? (
-            <div className="flex justify-center py-20">
-              <motion.div 
-                animate={{ rotate: 360 }}
-                transition={{ duration: 1.5, repeat: Infinity, ease: "linear" }}
-                className="w-10 h-10 border-3 border-emerald-200 border-t-emerald-500 rounded-full"
-              />
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-              {featuredProperties.map((property, i) => (
-                <PropertyCard key={property.id} property={property} index={i} />
-              ))}
-            </div>
-          )}
         </div>
       </section>
 

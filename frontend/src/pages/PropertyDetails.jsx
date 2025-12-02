@@ -96,62 +96,62 @@ const PropertyDetails = () => {
       {/* ========== HEADER ========== */}
       <div className="bg-onyx-950 py-8">
         <div className="container mx-auto px-6 lg:px-8">
-          <motion.button
-            initial={{ opacity: 0, x: -20 }}
-            animate={{ opacity: 1, x: 0 }}
+      <motion.button
+        initial={{ opacity: 0, x: -20 }}
+        animate={{ opacity: 1, x: 0 }}
             whileHover={{ x: -5 }}
-            whileTap={{ scale: 0.95 }}
-            onClick={() => navigate(-1)}
+        whileTap={{ scale: 0.95 }}
+        onClick={() => navigate(-1)}
             className="flex items-center space-x-3 text-ivory-400 hover:text-gold-400 transition-colors"
-          >
-            <FiArrowLeft className="w-5 h-5" />
+      >
+        <FiArrowLeft className="w-5 h-5" />
             <span className="font-medium">{t('propertyDetails.back')}</span>
-          </motion.button>
+      </motion.button>
         </div>
       </div>
 
       {/* ========== IMAGE GALLERY ========== */}
       <section className="relative">
-        <motion.div
+          <motion.div
           initial={{ opacity: 0, scale: 0.98 }}
-          animate={{ opacity: 1, scale: 1 }}
+            animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6 }}
           className="relative h-[60vh] lg:h-[70vh] overflow-hidden group"
-        >
-          <motion.img
-            key={currentImageIndex}
-            src={images[currentImageIndex]}
-            alt={property.title}
-            className="w-full h-full object-cover"
+          >
+            <motion.img
+              key={currentImageIndex}
+              src={images[currentImageIndex]}
+              alt={property.title}
+              className="w-full h-full object-cover"
             initial={{ opacity: 0, scale: 1.05 }}
             animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.5 }}
-          />
-          
+              transition={{ duration: 0.5 }}
+            />
+            
           {/* Overlay */}
           <div className="absolute inset-0 bg-gradient-to-t from-onyx-950 via-transparent to-onyx-950/30" />
           
           {/* Navigation Arrows */}
-          {images.length > 1 && (
-            <>
-              <motion.button
+            {images.length > 1 && (
+              <>
+                <motion.button
                 whileHover={{ scale: 1.1, x: -5 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={prevImage}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={prevImage}
                 className="absolute left-6 top-1/2 -translate-y-1/2 w-14 h-14 flex items-center justify-center bg-onyx-950/80 backdrop-blur-sm border border-gold-500/30 text-ivory-100 hover:border-gold-500 hover:text-gold-400 transition-all opacity-0 group-hover:opacity-100"
-              >
+                >
                 <FiChevronLeft className="w-6 h-6" />
-              </motion.button>
-              <motion.button
+                </motion.button>
+                <motion.button
                 whileHover={{ scale: 1.1, x: 5 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={nextImage}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={nextImage}
                 className="absolute right-6 top-1/2 -translate-y-1/2 w-14 h-14 flex items-center justify-center bg-onyx-950/80 backdrop-blur-sm border border-gold-500/30 text-ivory-100 hover:border-gold-500 hover:text-gold-400 transition-all opacity-0 group-hover:opacity-100"
-              >
+                >
                 <FiChevronRight className="w-6 h-6" />
-              </motion.button>
-            </>
-          )}
+                </motion.button>
+              </>
+            )}
 
           {/* Top Actions */}
           <div className="absolute top-6 right-6 flex items-center space-x-3">
@@ -198,7 +198,7 @@ const PropertyDetails = () => {
                       ? 'w-8 bg-gold-400' 
                       : 'w-4 bg-ivory-400/50 hover:bg-ivory-400'
                   }`}
-                />
+                  />
               ))}
             </div>
           )}
@@ -210,10 +210,10 @@ const PropertyDetails = () => {
         <div className="container mx-auto px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-12">
             {/* Main Content */}
-            <motion.div
+          <motion.div
               initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2 }}
+            transition={{ delay: 0.2 }}
               className="lg:col-span-2 space-y-12"
             >
               {/* Title & Location */}
@@ -222,13 +222,13 @@ const PropertyDetails = () => {
                   {property.property_type?.charAt(0).toUpperCase() + property.property_type?.slice(1) || 'Property'}
                 </span>
                 <h1 className="font-display text-4xl md:text-5xl font-semibold text-onyx-900 dark:text-ivory-50 mb-4">
-                  {property.title}
-                </h1>
+                {property.title}
+              </h1>
                 <div className="flex items-center space-x-2 text-onyx-500 dark:text-ivory-500">
                   <FiMapPin className="w-5 h-5 text-gold-500" />
                   <span className="font-light">{property.location || property.city}, {property.city}, {property.state}</span>
-                </div>
               </div>
+            </div>
 
               {/* Features Grid */}
               <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
@@ -265,7 +265,7 @@ const PropertyDetails = () => {
                     </div>
                     <div className="text-sm text-onyx-500 dark:text-ivory-500 uppercase tracking-wide mb-1">
                       {t('propertyDetails.area')}
-                    </div>
+                      </div>
                     <div className="font-display text-2xl font-semibold text-onyx-900 dark:text-ivory-50">
                       {property.area_sqft.toLocaleString()}
                       <span className="text-sm font-normal text-onyx-500 dark:text-ivory-500 ml-1">sqft</span>
@@ -280,7 +280,7 @@ const PropertyDetails = () => {
                     {t('propertyDetails.type')}
                   </div>
                   <div className="font-display text-xl font-semibold text-onyx-900 dark:text-ivory-50 capitalize">
-                    {property.property_type}
+                      {property.property_type}
                   </div>
                 </div>
               </div>
@@ -316,7 +316,7 @@ const PropertyDetails = () => {
                   </div>
                 </div>
               )}
-            </motion.div>
+                </motion.div>
 
             {/* Sidebar */}
             <motion.div
@@ -339,45 +339,45 @@ const PropertyDetails = () => {
                     </span>
                     <div className="font-display text-4xl font-bold text-gradient-gold">
                       {formatPrice(property.price)}
-                    </div>
-                  </div>
+              </div>
+            </div>
 
                   <div className="divider-gold mb-8" />
 
                   {/* Enquiry Button */}
-                  <motion.button
-                    whileHover={{ scale: 1.02 }}
-                    whileTap={{ scale: 0.98 }}
-                    onClick={() => setShowEnquiryForm(!showEnquiryForm)}
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => setShowEnquiryForm(!showEnquiryForm)}
                     className="btn-luxury w-full flex items-center justify-center space-x-2 mb-4"
-                  >
-                    <FiMail className="w-5 h-5" />
-                    <span>{t('propertyDetails.sendEnquiry')}</span>
-                  </motion.button>
+            >
+              <FiMail className="w-5 h-5" />
+              <span>{t('propertyDetails.sendEnquiry')}</span>
+            </motion.button>
 
                   {/* Enquiry Form */}
                   <AnimatePresence>
-                    {showEnquiryForm && (
-                      <motion.form
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: 'auto' }}
-                        exit={{ opacity: 0, height: 0 }}
-                        onSubmit={handleEnquiry}
+            {showEnquiryForm && (
+              <motion.form
+                initial={{ opacity: 0, height: 0 }}
+                animate={{ opacity: 1, height: 'auto' }}
+                exit={{ opacity: 0, height: 0 }}
+                onSubmit={handleEnquiry}
                         className="overflow-hidden"
-                      >
+              >
                         <div className="pt-4 space-y-4">
-                          <textarea
-                            value={enquiryMessage}
-                            onChange={(e) => setEnquiryMessage(e.target.value)}
-                            placeholder={t('propertyDetails.enterMessage')}
-                            required
-                            rows="4"
+                <textarea
+                  value={enquiryMessage}
+                  onChange={(e) => setEnquiryMessage(e.target.value)}
+                  placeholder={t('propertyDetails.enterMessage')}
+                  required
+                  rows="4"
                             className="input-luxury resize-none"
-                          />
-                          <motion.button
-                            type="submit"
-                            whileHover={{ scale: 1.02 }}
-                            whileTap={{ scale: 0.98 }}
+                />
+                <motion.button
+                  type="submit"
+                  whileHover={{ scale: 1.02 }}
+                  whileTap={{ scale: 0.98 }}
                             className="w-full flex items-center justify-center space-x-2 py-3 bg-gold-500/10 text-gold-500 border border-gold-500/30 hover:bg-gold-500 hover:text-onyx-900 transition-all font-medium"
                           >
                             <FiSend className="w-4 h-4" />
@@ -433,7 +433,7 @@ const PropertyDetails = () => {
               whileTap={{ scale: 0.9 }}
               onClick={() => setShowLightbox(false)}
               className="absolute top-6 right-6 w-12 h-12 flex items-center justify-center bg-ivory-100/10 text-ivory-100 hover:bg-gold-500 hover:text-onyx-900 transition-all"
-            >
+                >
               <FiX className="w-6 h-6" />
             </motion.button>
 
@@ -467,8 +467,8 @@ const PropertyDetails = () => {
                 </motion.button>
               </>
             )}
-          </motion.div>
-        )}
+        </motion.div>
+      )}
       </AnimatePresence>
     </div>
   )
