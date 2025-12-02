@@ -2,7 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException, status, Query
 from typing import List, Optional
 from app.models import (
     Property, PropertyCreate, PropertyUpdate, PropertyFilter,
-    PropertyType, User, TokenData
+    PropertyType, PropertyStatus, ListingType, User, TokenData
 )
 from app.auth import get_current_user
 from app.database import get_database
@@ -12,30 +12,25 @@ from datetime import datetime
 router = APIRouter()
 
 @router.post("/", response_model=Property, status_code=status.HTTP_201_CREATED)
-async def create_property(
-    property_data: PropertyCreate,
-    current_user: TokenData = Depends(get_current_user)
-):
+async def create_property(property_data: PropertyCreate):
+    """Create a new property listing. No login required - contact details are stored."""
     db = get_database()
     
-    # Get user - any authenticated user can list properties
-    user = await db.users.find_one({"email": current_user.email})
-    if not user:
-        raise HTTPException(status_code=404, detail="User not found")
-    
-    # Validate images count (max 3)
-    if len(property_data.images) > 3:
+    # Validate images count
+    if len(property_data.images) > 10:
         raise HTTPException(
             status_code=status.HTTP_400_BAD_REQUEST,
-            detail="Maximum 3 images allowed"
+            detail="Maximum 10 images allowed"
         )
     
     property_dict = {
         **property_data.dict(),
-        "seller_id": str(user["_id"]),
+        "seller_id": None,  # No user ID since no login required
+        "status": PropertyStatus.PENDING.value,  # Always pending for review
         "created_at": datetime.utcnow(),
         "updated_at": datetime.utcnow(),
-        "is_active": True
+        "is_active": True,
+        "views": 0
     }
     
     result = await db.properties.insert_one(property_dict)
@@ -49,6 +44,7 @@ async def get_properties(
     state: Optional[str] = Query(None),
     locality: Optional[str] = Query(None),
     property_type: Optional[PropertyType] = Query(None),
+    listing_type: Optional[ListingType] = Query(None),
     min_price: Optional[float] = Query(None),
     max_price: Optional[float] = Query(None),
     min_area_sqft: Optional[float] = Query(None),
@@ -60,9 +56,13 @@ async def get_properties(
     skip: int = Query(0, ge=0),
     limit: int = Query(100, ge=1, le=100)
 ):
+    """Get all approved properties with filters"""
     db = get_database()
     
-    filter_dict = {"is_active": True}
+    filter_dict = {
+        "is_active": True,
+        "status": PropertyStatus.APPROVED.value
+    }
     
     if city:
         filter_dict["city"] = {"$regex": city, "$options": "i"}
@@ -72,6 +72,8 @@ async def get_properties(
         filter_dict["locality"] = {"$regex": locality, "$options": "i"}
     if property_type:
         filter_dict["property_type"] = property_type.value
+    if listing_type:
+        filter_dict["listing_type"] = listing_type.value
     if min_price is not None:
         filter_dict["price"] = {"$gte": min_price}
     if max_price is not None:
@@ -250,4 +252,106 @@ async def get_admin_projects():
         result.append(Property(**prop))
     
     return result
+
+@router.get("/pending", response_model=List[Property])
+async def get_pending_properties(
+    current_user: TokenData = Depends(get_current_user)
+):
+    """Get all pending properties awaiting approval (Admin only)"""
+    db = get_database()
+    
+    user = await db.users.find_one({"email": current_user.email})
+    if not user or user.get("role") != "admin":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Only admins can view pending properties"
+        )
+    
+    cursor = db.properties.find({
+        "status": PropertyStatus.PENDING.value,
+        "is_active": True
+    }).sort("created_at", -1)
+    
+    properties = await cursor.to_list(length=100)
+    
+    result = []
+    for prop in properties:
+        prop["id"] = str(prop["_id"])
+        del prop["_id"]
+        result.append(Property(**prop))
+    
+    return result
+
+@router.put("/{property_id}/approve", response_model=Property)
+async def approve_property(
+    property_id: str,
+    current_user: TokenData = Depends(get_current_user)
+):
+    """Approve a pending property (Admin only)"""
+    db = get_database()
+    
+    if not ObjectId.is_valid(property_id):
+        raise HTTPException(status_code=400, detail="Invalid property ID")
+    
+    user = await db.users.find_one({"email": current_user.email})
+    if not user or user.get("role") != "admin":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Only admins can approve properties"
+        )
+    
+    await db.properties.update_one(
+        {"_id": ObjectId(property_id)},
+        {"$set": {"status": PropertyStatus.APPROVED.value, "updated_at": datetime.utcnow()}}
+    )
+    
+    updated = await db.properties.find_one({"_id": ObjectId(property_id)})
+    updated["id"] = str(updated["_id"])
+    del updated["_id"]
+    
+    return Property(**updated)
+
+@router.put("/{property_id}/reject", response_model=Property)
+async def reject_property(
+    property_id: str,
+    current_user: TokenData = Depends(get_current_user)
+):
+    """Reject a pending property (Admin only)"""
+    db = get_database()
+    
+    if not ObjectId.is_valid(property_id):
+        raise HTTPException(status_code=400, detail="Invalid property ID")
+    
+    user = await db.users.find_one({"email": current_user.email})
+    if not user or user.get("role") != "admin":
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="Only admins can reject properties"
+        )
+    
+    await db.properties.update_one(
+        {"_id": ObjectId(property_id)},
+        {"$set": {"status": PropertyStatus.REJECTED.value, "updated_at": datetime.utcnow()}}
+    )
+    
+    updated = await db.properties.find_one({"_id": ObjectId(property_id)})
+    updated["id"] = str(updated["_id"])
+    del updated["_id"]
+    
+    return Property(**updated)
+
+@router.put("/{property_id}/view")
+async def increment_property_views(property_id: str):
+    """Increment property view count"""
+    db = get_database()
+    
+    if not ObjectId.is_valid(property_id):
+        raise HTTPException(status_code=400, detail="Invalid property ID")
+    
+    await db.properties.update_one(
+        {"_id": ObjectId(property_id)},
+        {"$inc": {"views": 1}}
+    )
+    
+    return {"message": "View counted"}
 
