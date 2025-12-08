@@ -1,15 +1,21 @@
 import { Link, useNavigate, useLocation } from 'react-router-dom'
 import { motion, AnimatePresence } from 'framer-motion'
 import { useAuth } from '../context/AuthContext'
+import { useTheme } from '../context/ThemeContext'
+import { useLanguage } from '../context/LanguageContext'
+import { useTranslation } from 'react-i18next'
 import { useState, useEffect } from 'react'
 import { 
-  FiUser, FiLogOut, FiMenu, FiX, 
+  FiSun, FiMoon, FiUser, FiLogOut, FiMenu, FiX, FiGlobe, 
   FiChevronDown, FiHome, FiCalendar, FiInfo, FiPhone, FiGrid,
   FiDollarSign, FiKey, FiTrendingUp
 } from 'react-icons/fi'
 
 const Navbar = () => {
   const { user, logout, isAuthenticated } = useAuth()
+  const { darkMode, toggleDarkMode } = useTheme()
+  const { language, changeLanguage } = useLanguage()
+  const { t } = useTranslation()
   const navigate = useNavigate()
   const location = useLocation()
   const [isScrolled, setIsScrolled] = useState(false)
@@ -34,6 +40,10 @@ const Navbar = () => {
     navigate('/')
   }
 
+  const toggleLanguage = () => {
+    changeLanguage(language === 'en' ? 'hi' : 'en')
+  }
+
   const services = [
     { to: '/buy', label: 'Buy Property', icon: <FiHome className="w-4 h-4" />, desc: 'Houses, Apartments, Villas & More' },
     { to: '/sell', label: 'Sell Property', icon: <FiDollarSign className="w-4 h-4" />, desc: 'List your property with us' },
@@ -52,7 +62,7 @@ const Navbar = () => {
 
   return (
     <>
-    <motion.nav
+      <motion.nav
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
@@ -61,26 +71,26 @@ const Navbar = () => {
             ? 'bg-white shadow-lg shadow-gray-200/50 py-3' 
             : 'bg-white/80 backdrop-blur-md py-4'
         }`}
-    >
+      >
         <div className="container mx-auto px-6 lg:px-8">
-        <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between">
             {/* Logo */}
             <Link to="/" className="relative group">
-            <motion.div
+              <motion.div
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className="flex items-center space-x-3"
               >
                 <img 
-                  src="https://storage.googleapis.com/supersourcing-doc-dev/fece4825-210b-4e5e-824b-283e221d16b7.png" 
+                  src="https://storage.googleapis.com/supersourcing-doc-dev/ddc22abb-49ab-4b37-85fd-d8aa4a4d3ff4.jpeg" 
                   alt="DeepRealties" 
                   className="h-12 w-auto"
                 />
                 <span className="text-xl font-bold text-gray-800">
                   Deep<span className="text-emerald-600">Realties</span>
                 </span>
-            </motion.div>
-          </Link>
+              </motion.div>
+            </Link>
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-1">
@@ -135,10 +145,10 @@ const Navbar = () => {
                                 {service.desc}
                               </div>
                             </div>
-              </Link>
+                          </Link>
                         ))}
                       </div>
-            </motion.div>
+                    </motion.div>
                   )}
                 </AnimatePresence>
               </div>
@@ -175,13 +185,13 @@ const Navbar = () => {
                               {link.icon}
                             </div>
                             <span className="font-medium text-sm">{link.label}</span>
-              </Link>
+                          </Link>
                         ))}
                       </div>
-            </motion.div>
+                    </motion.div>
                   )}
                 </AnimatePresence>
-          </div>
+              </div>
 
               {/* Dashboard Link - Only visible when logged in */}
               {isAuthenticated && (
@@ -200,16 +210,59 @@ const Navbar = () => {
 
             {/* Right Side Actions */}
             <div className="hidden lg:flex items-center space-x-3">
-            {isAuthenticated ? (
-              <div className="flex items-center space-x-3">
-                    <Link
+              {/* Language Switcher */}
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={toggleLanguage}
+                className="p-2.5 rounded-xl bg-gray-100 hover:bg-emerald-50 transition-colors group"
+              >
+                <FiGlobe className="w-4 h-4 text-gray-600 group-hover:text-emerald-600 transition-colors" />
+              </motion.button>
+
+              {/* Theme Toggle */}
+              <motion.button
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                onClick={toggleDarkMode}
+                className="p-2.5 rounded-xl bg-gray-100 hover:bg-emerald-50 transition-colors group"
+              >
+                <AnimatePresence mode="wait">
+                  {darkMode ? (
+                    <motion.div
+                      key="sun"
+                      initial={{ rotate: -90, opacity: 0 }}
+                      animate={{ rotate: 0, opacity: 1 }}
+                      exit={{ rotate: 90, opacity: 0 }}
+                    >
+                      <FiSun className="w-4 h-4 text-amber-500" />
+                    </motion.div>
+                  ) : (
+                    <motion.div
+                      key="moon"
+                      initial={{ rotate: 90, opacity: 0 }}
+                      animate={{ rotate: 0, opacity: 1 }}
+                      exit={{ rotate: -90, opacity: 0 }}
+                    >
+                      <FiMoon className="w-4 h-4 text-gray-600" />
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.button>
+
+              {/* Divider */}
+              <div className="w-px h-8 bg-gray-200" />
+
+              {isAuthenticated ? (
+                <div className="flex items-center space-x-3">
+                  <Link
                     to={user?.role === 'admin' ? '/admin/dashboard' : '/dashboard'}
                     className={`flex items-center space-x-2 px-4 py-2 rounded-full transition-colors ${
                       user?.role === 'admin' 
                         ? 'bg-amber-50 hover:bg-amber-100' 
                         : 'bg-emerald-50 hover:bg-emerald-100'
                     }`}
-                    >
+                  >
                     <FiUser className={`w-4 h-4 ${user?.role === 'admin' ? 'text-amber-600' : 'text-emerald-600'}`} />
                     <span className={`text-sm font-semibold ${user?.role === 'admin' ? 'text-amber-700' : 'text-emerald-700'}`}>
                       {user?.full_name}
@@ -219,17 +272,17 @@ const Navbar = () => {
                         ADMIN
                       </span>
                     )}
-                    </Link>
-                <motion.button
+                  </Link>
+                  <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                  onClick={handleLogout}
+                    onClick={handleLogout}
                     className="flex items-center space-x-1 p-2.5 text-gray-500 hover:text-red-500 hover:bg-red-50 rounded-xl text-sm font-medium transition-colors"
-                >
+                  >
                     <FiLogOut className="w-4 h-4" />
-                </motion.button>
-              </div>
-            ) : (
+                  </motion.button>
+                </div>
+              ) : (
                 <div className="flex items-center space-x-3">
                   <Link
                     to="/login"
@@ -243,16 +296,16 @@ const Navbar = () => {
                       className="px-6 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 text-white text-sm font-bold rounded-full shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/40 transition-all"
                     >
                       Get Started
-                  </Link>
-                </motion.div>
+                    </Link>
+                  </motion.div>
                 </div>
               )}
             </div>
 
             {/* Mobile Menu Button */}
             <motion.button
-                  whileHover={{ scale: 1.05 }}
-                  whileTap={{ scale: 0.95 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="lg:hidden p-2.5 text-gray-700 bg-gray-100 rounded-xl"
             >
@@ -371,6 +424,28 @@ const Navbar = () => {
                   ))}
                 </div>
 
+                <div className="h-px bg-gray-100 mb-6" />
+
+                {/* Settings */}
+                <div className="flex items-center justify-between px-3 py-3 mb-3 bg-gray-50 rounded-xl">
+                  <span className="text-sm font-semibold text-gray-600">Theme</span>
+                  <button
+                    onClick={toggleDarkMode}
+                    className="p-2.5 bg-white text-emerald-600 rounded-lg shadow-sm"
+                  >
+                    {darkMode ? <FiSun className="w-4 h-4" /> : <FiMoon className="w-4 h-4" />}
+                  </button>
+                </div>
+                <div className="flex items-center justify-between px-3 py-3 mb-6 bg-gray-50 rounded-xl">
+                  <span className="text-sm font-semibold text-gray-600">Language</span>
+                  <button
+                    onClick={toggleLanguage}
+                    className="px-4 py-1.5 text-sm font-bold bg-white text-emerald-600 rounded-lg shadow-sm"
+                  >
+                    {language === 'en' ? 'हिंदी' : 'EN'}
+                  </button>
+                </div>
+
                 {/* Auth */}
                 <div className="mt-auto space-y-3">
                   {isAuthenticated ? (
@@ -392,7 +467,7 @@ const Navbar = () => {
                               ADMIN
                             </span>
                           )}
-              </div>
+                        </div>
                         <p className={`text-xs mt-1 ${user?.role === 'admin' ? 'text-amber-600' : 'text-emerald-600'}`}>
                           {user?.role === 'admin' ? 'Open Admin Panel →' : 'View Dashboard →'}
                         </p>
@@ -425,9 +500,9 @@ const Navbar = () => {
                         Get Started
                       </Link>
                     </>
-            )}
-          </div>
-        </div>
+                  )}
+                </div>
+              </div>
             </motion.div>
           </motion.div>
         )}
