@@ -8,96 +8,16 @@ import { FiSearch, FiMapPin, FiHome, FiTrendingUp, FiUsers, FiAward, FiStar, FiA
 // ELEGANT GREEN THEME COMPONENTS
 // ============================================
 
-// Beautiful animated gradient background
+// Clean gradient background without blur effects
 const ElegantBackground = () => (
   <div className="absolute inset-0 overflow-hidden">
-    {/* Base gradient */}
-    <div className="absolute inset-0 bg-gradient-to-br from-white via-emerald-50/50 to-teal-50/60" />
+    {/* Base gradient - more visible */}
+    <div className="absolute inset-0 bg-gradient-to-br from-white via-emerald-50 to-teal-50" />
     
-    {/* Animated gradient mesh */}
-    <motion.div
-      animate={{ 
-        background: [
-          'radial-gradient(circle at 20% 20%, rgba(16, 185, 129, 0.15) 0%, transparent 50%)',
-          'radial-gradient(circle at 80% 80%, rgba(16, 185, 129, 0.15) 0%, transparent 50%)',
-          'radial-gradient(circle at 20% 80%, rgba(16, 185, 129, 0.15) 0%, transparent 50%)',
-          'radial-gradient(circle at 80% 20%, rgba(16, 185, 129, 0.15) 0%, transparent 50%)',
-          'radial-gradient(circle at 20% 20%, rgba(16, 185, 129, 0.15) 0%, transparent 50%)',
-        ]
-      }}
-      transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
-      className="absolute inset-0"
-    />
-    
-    {/* Large floating orbs */}
-    <motion.div
-      animate={{ 
-        x: [0, 100, 50, 0],
-        y: [0, 50, 100, 0],
-        scale: [1, 1.2, 1.1, 1],
-      }}
-      transition={{ duration: 25, repeat: Infinity, ease: "easeInOut" }}
-      className="absolute -top-20 -right-20 w-[600px] h-[600px] rounded-full opacity-60"
-      style={{ background: 'radial-gradient(circle, rgba(16, 185, 129, 0.12) 0%, rgba(20, 184, 166, 0.08) 40%, transparent 70%)', filter: 'blur(40px)' }}
-    />
-    <motion.div
-      animate={{ 
-        x: [0, -80, -40, 0],
-        y: [0, 80, 40, 0],
-        scale: [1.1, 1, 1.2, 1.1],
-      }}
-      transition={{ duration: 30, repeat: Infinity, ease: "easeInOut" }}
-      className="absolute -bottom-32 -left-32 w-[500px] h-[500px] rounded-full opacity-50"
-      style={{ background: 'radial-gradient(circle, rgba(6, 182, 212, 0.1) 0%, rgba(16, 185, 129, 0.06) 50%, transparent 70%)', filter: 'blur(50px)' }}
-    />
-    <motion.div
-      animate={{ 
-        scale: [1, 1.3, 1],
-        opacity: [0.3, 0.5, 0.3],
-      }}
-      transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-      className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] rounded-full"
-      style={{ background: 'radial-gradient(circle, rgba(52, 211, 153, 0.08) 0%, transparent 60%)', filter: 'blur(60px)' }}
-    />
-    
-    {/* Animated wave lines */}
-    <svg className="absolute bottom-0 left-0 w-full h-64 opacity-20" viewBox="0 0 1440 200" preserveAspectRatio="none">
-      <motion.path
-        d="M0,100 C360,150 720,50 1080,100 C1260,130 1440,80 1440,80 L1440,200 L0,200 Z"
-        fill="url(#waveGradient1)"
-        animate={{
-          d: [
-            "M0,100 C360,150 720,50 1080,100 C1260,130 1440,80 1440,80 L1440,200 L0,200 Z",
-            "M0,80 C360,50 720,150 1080,80 C1260,50 1440,120 1440,120 L1440,200 L0,200 Z",
-            "M0,100 C360,150 720,50 1080,100 C1260,130 1440,80 1440,80 L1440,200 L0,200 Z",
-          ]
-        }}
-        transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <motion.path
-        d="M0,120 C480,170 960,70 1440,120 L1440,200 L0,200 Z"
-        fill="url(#waveGradient2)"
-        animate={{
-          d: [
-            "M0,120 C480,170 960,70 1440,120 L1440,200 L0,200 Z",
-            "M0,100 C480,50 960,170 1440,100 L1440,200 L0,200 Z",
-            "M0,120 C480,170 960,70 1440,120 L1440,200 L0,200 Z",
-          ]
-        }}
-        transition={{ duration: 12, repeat: Infinity, ease: "easeInOut" }}
-      />
-      <defs>
-        <linearGradient id="waveGradient1" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#10B981" stopOpacity="0.3" />
-          <stop offset="50%" stopColor="#14B8A6" stopOpacity="0.2" />
-          <stop offset="100%" stopColor="#06B6D4" stopOpacity="0.3" />
-        </linearGradient>
-        <linearGradient id="waveGradient2" x1="0%" y1="0%" x2="100%" y2="0%">
-          <stop offset="0%" stopColor="#14B8A6" stopOpacity="0.2" />
-          <stop offset="100%" stopColor="#10B981" stopOpacity="0.2" />
-        </linearGradient>
-      </defs>
-    </svg>
+    {/* Additional gradient layers for depth */}
+    <div className="absolute inset-0 bg-gradient-to-t from-emerald-100/40 via-transparent to-transparent" />
+    <div className="absolute top-0 right-0 w-1/2 h-1/2 bg-gradient-to-bl from-teal-100/50 to-transparent" />
+    <div className="absolute bottom-0 left-0 w-1/2 h-1/2 bg-gradient-to-tr from-emerald-100/30 to-transparent" />
     
     {/* Subtle grid pattern */}
     <div 
@@ -113,110 +33,18 @@ const ElegantBackground = () => (
   </div>
 )
 
-// Floating decorative elements with various shapes
+// Simple decorative elements (no blur)
 const FloatingElements = () => (
   <div className="absolute inset-0 overflow-hidden pointer-events-none">
-    {/* Floating circles */}
-    {[...Array(8)].map((_, i) => (
-      <motion.div
-        key={`circle-${i}`}
-        initial={{ 
-          x: `${10 + (i * 12)}%`, 
-          y: `${20 + (i * 8)}%`, 
-          opacity: 0,
-          scale: 0.5
-        }}
-        animate={{ 
-          y: [`${20 + (i * 8)}%`, `${10 + (i * 5)}%`, `${20 + (i * 8)}%`],
-          opacity: [0.2, 0.5, 0.2],
-          scale: [0.8, 1, 0.8],
-        }}
-        transition={{ 
-          duration: 6 + i * 2, 
-          repeat: Infinity, 
-          delay: i * 0.5,
-          ease: "easeInOut"
-        }}
-        className="absolute w-3 h-3 rounded-full"
-        style={{
-          background: `linear-gradient(135deg, rgba(16, 185, 129, ${0.3 + i * 0.05}), rgba(20, 184, 166, ${0.2 + i * 0.03}))`,
-          boxShadow: `0 0 20px rgba(16, 185, 129, 0.3)`
-        }}
-      />
-    ))}
+    {/* Decorative circles - visible on all devices */}
+    <div className="absolute top-20 right-10 md:right-20 w-24 md:w-32 h-24 md:h-32 rounded-full border-2 border-emerald-200/30" />
+    <div className="absolute bottom-32 left-5 md:left-16 w-20 md:w-24 h-20 md:h-24 rounded-full border-2 border-teal-200/25" />
+    <div className="absolute top-1/3 left-5 md:left-10 w-12 md:w-16 h-12 md:h-16 rounded-full border border-emerald-300/20" />
+    <div className="absolute bottom-1/4 right-10 md:right-1/4 w-16 md:w-20 h-16 md:h-20 rounded-full border border-teal-300/20" />
     
-    {/* Floating diamonds */}
-    {[...Array(5)].map((_, i) => (
-      <motion.div
-        key={`diamond-${i}`}
-        initial={{ 
-          x: `${70 - (i * 15)}%`, 
-          y: `${30 + (i * 12)}%`, 
-          rotate: 45,
-          opacity: 0 
-        }}
-        animate={{ 
-          y: [`${30 + (i * 12)}%`, `${20 + (i * 8)}%`, `${30 + (i * 12)}%`],
-          rotate: [45, 225, 405],
-          opacity: [0.15, 0.4, 0.15],
-        }}
-        transition={{ 
-          duration: 10 + i * 3, 
-          repeat: Infinity, 
-          delay: i * 0.8,
-          ease: "easeInOut"
-        }}
-        className="absolute w-4 h-4 border-2 border-emerald-400/40"
-      />
-    ))}
-    
-    {/* Glowing dots trail */}
-    {[...Array(12)].map((_, i) => (
-      <motion.div
-        key={`dot-${i}`}
-        initial={{ opacity: 0 }}
-        animate={{ 
-          x: [
-            `${5 + i * 8}%`,
-            `${10 + i * 8}%`,
-            `${5 + i * 8}%`
-          ],
-          y: [
-            `${80 - i * 5}%`,
-            `${75 - i * 5}%`,
-            `${80 - i * 5}%`
-          ],
-          opacity: [0, 0.6, 0],
-          scale: [0.5, 1.2, 0.5],
-        }}
-        transition={{ 
-          duration: 4 + Math.random() * 3, 
-          repeat: Infinity, 
-          delay: i * 0.3,
-          ease: "easeInOut"
-        }}
-        className="absolute w-1.5 h-1.5 rounded-full bg-teal-400"
-        style={{ boxShadow: '0 0 10px rgba(20, 184, 166, 0.5)' }}
-      />
-    ))}
-    
-    {/* Animated rings */}
-    <motion.div
-      animate={{ 
-        scale: [1, 1.5, 1],
-        opacity: [0.1, 0.3, 0.1],
-      }}
-      transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-      className="absolute top-20 right-20 w-32 h-32 rounded-full border border-emerald-300/30"
-    />
-    <motion.div
-      animate={{ 
-        scale: [1.2, 1, 1.2],
-        opacity: [0.15, 0.25, 0.15],
-      }}
-      transition={{ duration: 10, repeat: Infinity, ease: "easeInOut", delay: 1 }}
-      className="absolute bottom-32 left-16 w-24 h-24 rounded-full border-2 border-teal-300/20"
-    />
+    {/* Additional decorative shapes */}
+    <div className="absolute top-1/2 right-5 w-8 h-8 rotate-45 border border-emerald-300/25" />
+    <div className="absolute top-[60%] left-10 w-6 h-6 rotate-45 border border-teal-300/20" />
   </div>
 )
 
@@ -273,9 +101,19 @@ const Home = () => {
   const [searchFilters, setSearchFilters] = useState({ city: '', property_type: '', max_price: '' })
   const [activeTestimonial, setActiveTestimonial] = useState(0)
   const [hoveredService, setHoveredService] = useState(null)
+  const [isMobile, setIsMobile] = useState(false)
 
-  const heroOpacity = useTransform(scrollY, [0, 400], [1, 0])
-  const heroY = useTransform(scrollY, [0, 400], [0, -60])
+  // Detect mobile device
+  useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768)
+    checkMobile()
+    window.addEventListener('resize', checkMobile)
+    return () => window.removeEventListener('resize', checkMobile)
+  }, [])
+
+  // Only apply scroll effects on desktop
+  const heroOpacity = useTransform(scrollY, [0, 400], [1, isMobile ? 1 : 0])
+  const heroY = useTransform(scrollY, [0, 400], [0, isMobile ? 0 : -60])
 
   useEffect(() => {
     const timer = setInterval(() => setActiveTestimonial(p => (p + 1) % testimonials.length), 6000)
@@ -475,33 +313,10 @@ const Home = () => {
 
       {/* ==================== SERVICES ==================== */}
       <section className="relative py-20 bg-gray-50 overflow-hidden">
-        {/* Animated background for services */}
+        {/* Decorative borders */}
         <div className="absolute inset-0 pointer-events-none">
-          <motion.div
-            animate={{ 
-              rotate: [0, 360],
-            }}
-            transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-            className="absolute -top-40 -right-40 w-80 h-80 rounded-full border border-emerald-200/30"
-          />
-          <motion.div
-            animate={{ 
-              rotate: [360, 0],
-            }}
-            transition={{ duration: 45, repeat: Infinity, ease: "linear" }}
-            className="absolute -bottom-20 -left-20 w-60 h-60 rounded-full border-2 border-dashed border-teal-200/20"
-          />
-          {/* Floating blobs */}
-          <motion.div
-            animate={{ y: [-20, 20, -20], x: [-10, 10, -10] }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-20 left-[20%] w-32 h-32 rounded-full bg-emerald-100/50 blur-3xl"
-          />
-          <motion.div
-            animate={{ y: [20, -20, 20], x: [10, -10, 10] }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute bottom-20 right-[15%] w-40 h-40 rounded-full bg-teal-100/40 blur-3xl"
-          />
+          <div className="absolute -top-40 -right-40 w-80 h-80 rounded-full border border-emerald-200/20" />
+          <div className="absolute -bottom-20 -left-20 w-60 h-60 rounded-full border border-teal-200/15" />
         </div>
         <div className="container mx-auto px-6 lg:px-8 relative">
           <Reveal className="text-center mb-14">
@@ -593,74 +408,11 @@ const Home = () => {
 
       {/* ==================== TESTIMONIALS ==================== */}
       <section className="py-20 bg-gradient-to-br from-emerald-600 via-teal-600 to-emerald-700 relative overflow-hidden">
-        {/* Animated decorative elements */}
+        {/* Decorative elements */}
         <div className="absolute inset-0 pointer-events-none">
-          {/* Moving light orbs */}
-          <motion.div
-            animate={{ 
-              x: [-50, 50, -50],
-              y: [-30, 30, -30],
-              scale: [1, 1.2, 1],
-            }}
-            transition={{ duration: 15, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-10 left-10 w-60 h-60 bg-white/10 rounded-full blur-3xl"
-          />
-          <motion.div
-            animate={{ 
-              x: [50, -50, 50],
-              y: [30, -30, 30],
-              scale: [1.2, 1, 1.2],
-            }}
-            transition={{ duration: 18, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute bottom-10 right-10 w-80 h-80 bg-white/10 rounded-full blur-3xl"
-          />
-          <motion.div
-            animate={{ 
-              scale: [1, 1.3, 1],
-              opacity: [0.1, 0.2, 0.1],
-            }}
-            transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-white/5 rounded-full blur-3xl"
-          />
-          
-          {/* Floating stars/sparkles */}
-          {[...Array(15)].map((_, i) => (
-            <motion.div
-              key={i}
-              animate={{
-                y: [-10, 10, -10],
-                opacity: [0.2, 0.6, 0.2],
-                scale: [0.8, 1.2, 0.8],
-              }}
-              transition={{
-                duration: 3 + Math.random() * 2,
-                repeat: Infinity,
-                delay: Math.random() * 2,
-                ease: "easeInOut"
-              }}
-              className="absolute w-1 h-1 bg-white rounded-full"
-              style={{
-                left: `${10 + Math.random() * 80}%`,
-                top: `${10 + Math.random() * 80}%`,
-              }}
-            />
-          ))}
-          
-          {/* Animated quote marks */}
-          <motion.div
-            animate={{ opacity: [0.05, 0.1, 0.05], scale: [1, 1.1, 1] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute top-20 left-[10%] text-white/10 text-[200px] font-serif"
-          >
-            "
-          </motion.div>
-          <motion.div
-            animate={{ opacity: [0.05, 0.1, 0.05], scale: [1, 1.1, 1] }}
-            transition={{ duration: 6, repeat: Infinity, ease: "easeInOut", delay: 3 }}
-            className="absolute bottom-0 right-[10%] text-white/10 text-[200px] font-serif rotate-180"
-          >
-            "
-          </motion.div>
+          {/* Quote marks */}
+          <div className="absolute top-20 left-[10%] text-white/5 text-[150px] font-serif hidden md:block">"</div>
+          <div className="absolute bottom-0 right-[10%] text-white/5 text-[150px] font-serif rotate-180 hidden md:block">"</div>
         </div>
         
         <div className="container mx-auto px-6 lg:px-8 relative">
@@ -728,18 +480,10 @@ const Home = () => {
 
       {/* ==================== CTA ==================== */}
       <section className="py-20 bg-white relative overflow-hidden">
-        {/* Animated background patterns */}
+        {/* Decorative borders */}
         <div className="absolute inset-0 pointer-events-none">
-          <motion.div
-            animate={{ rotate: [0, 360] }}
-            transition={{ duration: 80, repeat: Infinity, ease: "linear" }}
-            className="absolute -top-20 -left-20 w-64 h-64 rounded-full border border-emerald-100/50"
-          />
-          <motion.div
-            animate={{ rotate: [360, 0] }}
-            transition={{ duration: 60, repeat: Infinity, ease: "linear" }}
-            className="absolute -bottom-10 -right-10 w-48 h-48 rounded-full border-2 border-dashed border-teal-100/40"
-          />
+          <div className="absolute -top-20 -left-20 w-64 h-64 rounded-full border border-emerald-100/30" />
+          <div className="absolute -bottom-10 -right-10 w-48 h-48 rounded-full border border-teal-100/20" />
         </div>
         
         <div className="container mx-auto px-6 lg:px-8 relative">
@@ -748,17 +492,6 @@ const Home = () => {
             transition={{ type: "spring", stiffness: 300 }}
             className="max-w-4xl mx-auto text-center bg-gradient-to-br from-gray-50 via-white to-emerald-50 p-10 md:p-14 rounded-3xl border border-gray-100 shadow-xl shadow-emerald-100/30 relative overflow-hidden"
           >
-            {/* Inner animated accents */}
-            <motion.div
-              animate={{ x: [-20, 20, -20], opacity: [0.3, 0.6, 0.3] }}
-              transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute top-0 left-0 w-32 h-32 bg-emerald-200/30 rounded-full blur-3xl"
-            />
-            <motion.div
-              animate={{ x: [20, -20, 20], opacity: [0.3, 0.6, 0.3] }}
-              transition={{ duration: 10, repeat: Infinity, ease: "easeInOut" }}
-              className="absolute bottom-0 right-0 w-40 h-40 bg-teal-200/30 rounded-full blur-3xl"
-            />
             <Reveal>
               <h2 className="text-3xl md:text-4xl font-bold text-gray-800 mb-4">
                 Ready to Find Your

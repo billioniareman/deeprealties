@@ -52,7 +52,7 @@ const Navbar = () => {
 
   return (
     <>
-      <motion.nav
+    <motion.nav
         initial={{ y: -100, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
@@ -61,12 +61,12 @@ const Navbar = () => {
             ? 'bg-white shadow-lg shadow-gray-200/50 py-3' 
             : 'bg-white/80 backdrop-blur-md py-4'
         }`}
-      >
+    >
         <div className="container mx-auto px-6 lg:px-8">
-          <div className="flex items-center justify-between">
+        <div className="flex items-center justify-between">
             {/* Logo */}
             <Link to="/" className="relative group">
-              <motion.div
+            <motion.div
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 className="flex items-center space-x-3"
@@ -79,8 +79,8 @@ const Navbar = () => {
                 <span className="text-xl font-bold text-gray-800">
                   Deep<span className="text-emerald-600">Realties</span>
                 </span>
-              </motion.div>
-            </Link>
+            </motion.div>
+          </Link>
 
             {/* Desktop Navigation */}
             <div className="hidden lg:flex items-center space-x-1">
@@ -135,10 +135,10 @@ const Navbar = () => {
                                 {service.desc}
                               </div>
                             </div>
-                          </Link>
+              </Link>
                         ))}
                       </div>
-                    </motion.div>
+            </motion.div>
                   )}
                 </AnimatePresence>
               </div>
@@ -175,13 +175,13 @@ const Navbar = () => {
                               {link.icon}
                             </div>
                             <span className="font-medium text-sm">{link.label}</span>
-                          </Link>
+              </Link>
                         ))}
                       </div>
-                    </motion.div>
+            </motion.div>
                   )}
                 </AnimatePresence>
-              </div>
+          </div>
 
               {/* Dashboard Link - Only visible when logged in */}
               {isAuthenticated && (
@@ -200,16 +200,16 @@ const Navbar = () => {
 
             {/* Right Side Actions */}
             <div className="hidden lg:flex items-center space-x-3">
-              {isAuthenticated ? (
-                <div className="flex items-center space-x-3">
-                  <Link
+            {isAuthenticated ? (
+              <div className="flex items-center space-x-3">
+                    <Link
                     to={user?.role === 'admin' ? '/admin/dashboard' : '/dashboard'}
                     className={`flex items-center space-x-2 px-4 py-2 rounded-full transition-colors ${
                       user?.role === 'admin' 
                         ? 'bg-amber-50 hover:bg-amber-100' 
                         : 'bg-emerald-50 hover:bg-emerald-100'
                     }`}
-                  >
+                    >
                     <FiUser className={`w-4 h-4 ${user?.role === 'admin' ? 'text-amber-600' : 'text-emerald-600'}`} />
                     <span className={`text-sm font-semibold ${user?.role === 'admin' ? 'text-amber-700' : 'text-emerald-700'}`}>
                       {user?.full_name}
@@ -219,17 +219,17 @@ const Navbar = () => {
                         ADMIN
                       </span>
                     )}
-                  </Link>
-                  <motion.button
+                    </Link>
+                <motion.button
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
-                    onClick={handleLogout}
+                  onClick={handleLogout}
                     className="flex items-center space-x-1 p-2.5 text-gray-500 hover:text-red-500 hover:bg-red-50 rounded-xl text-sm font-medium transition-colors"
-                  >
+                >
                     <FiLogOut className="w-4 h-4" />
-                  </motion.button>
-                </div>
-              ) : (
+                </motion.button>
+              </div>
+            ) : (
                 <div className="flex items-center space-x-3">
                   <Link
                     to="/login"
@@ -243,16 +243,16 @@ const Navbar = () => {
                       className="px-6 py-2.5 bg-gradient-to-r from-emerald-500 to-teal-500 text-white text-sm font-bold rounded-full shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/40 transition-all"
                     >
                       Get Started
-                    </Link>
-                  </motion.div>
+                  </Link>
+                </motion.div>
                 </div>
               )}
             </div>
 
             {/* Mobile Menu Button */}
             <motion.button
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="lg:hidden p-2.5 text-gray-700 bg-gray-100 rounded-xl"
             >
@@ -392,7 +392,7 @@ const Navbar = () => {
                               ADMIN
                             </span>
                           )}
-                        </div>
+              </div>
                         <p className={`text-xs mt-1 ${user?.role === 'admin' ? 'text-amber-600' : 'text-emerald-600'}`}>
                           {user?.role === 'admin' ? 'Open Admin Panel →' : 'View Dashboard →'}
                         </p>
@@ -425,9 +425,9 @@ const Navbar = () => {
                         Get Started
                       </Link>
                     </>
-                  )}
-                </div>
-              </div>
+            )}
+          </div>
+        </div>
             </motion.div>
           </motion.div>
         )}
