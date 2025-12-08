@@ -69,7 +69,7 @@ const Login = () => {
           {/* Logo */}
           <Link to="/" className="flex items-center justify-center mb-12">
             <img 
-              src="https://storage.googleapis.com/supersourcing-doc-dev/fece4825-210b-4e5e-824b-283e221d16b7.png" 
+              src="https://storage.googleapis.com/supersourcing-doc-dev/ddc22abb-49ab-4b37-85fd-d8aa4a4d3ff4.jpeg" 
               alt="DeepRealties" 
               className="h-16 w-auto"
             />

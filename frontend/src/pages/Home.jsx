@@ -541,11 +541,11 @@ const Home = () => {
             {/* Brand */}
             <div className="lg:col-span-1">
               <div className="flex items-center space-x-3 mb-4">
-                <img 
-                  src="https://storage.googleapis.com/supersourcing-doc-dev/fece4825-210b-4e5e-824b-283e221d16b7.png" 
-                  alt="DeepRealties" 
-                  className="h-12 w-auto brightness-0 invert"
-                />
+              <img 
+                src="https://storage.googleapis.com/supersourcing-doc-dev/ddc22abb-49ab-4b37-85fd-d8aa4a4d3ff4.jpeg" 
+                alt="DeepRealties" 
+                className="h-12 w-auto brightness-0 invert"
+              />
                 <span className="text-xl font-bold text-white">
                   Deep<span className="text-emerald-400">Realties</span>
                 </span>
